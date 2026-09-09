@@ -48,9 +48,9 @@ function plotFig5and7_Pareto_allRuns()
     ALG_SIZES   = [60, 40, 40, 34, 44, 46];
 
     X_LABEL = '$J_1$: Path Length (m)';
-    Y_LABEL = '$J_2$: Cumulative Risk Cost';
-    Z_LABEL = '$J_3$: Flight Height Energy';
-    C_LABEL = '$J_4$: Turning Smoothness';
+    Y_LABEL = '$J_2$: Energy Consumption';
+    Z_LABEL = '$J_3$: Safety and Search Coverage Cost';
+    C_LABEL = '$J_4$: Sensor Imaging Quality';
 
     % 场景一：山地救援
     drawFrontFigure_allRuns(pathData.scene1, ALG_KEYS, ALG_NAMES, ALG_MARKERS, ALG_SIZES, ...

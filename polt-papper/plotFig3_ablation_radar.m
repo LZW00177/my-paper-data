@@ -1,36 +1,24 @@
 function plotFig3_ablation_radar()
-% 消融实验 Friedman 排名雷达图
+% 消融实验 Friedman 排名雷达图（仿 EALA 论文 Fig2/Fig3 风格）
 % 每条线 = 一个算法；值 = Friedman 平均排名（rank，越小越优，从中心向外增大）
-% 数据源（2026-09-06 修正，与论文表10 口径一致）：
-%   ZDT1/2/3 <- ablation_par.mat（旧，8/18，ZDT 系列论文数据源）
-%   DTLZ1/2/3 <- ablation_DTLZ_all.mat（修正口径：DTLZ1/3 TMAX=2000, DTLZ2 TMAX=500）
-%   合并为 6 基准 stats 后绘制，与表10/正文 4.2 节一致
+% 数据源（2026-09-08，IALA 按 Zheng2026 重写重跑，最终数据源）:
+%   results/ablation_final.mat（make_ablation_final.m 生成，公开/投稿用）
+%   6 基准 IGD Friedman 排名; ZDT TMAX=300; DTLZ1/3 TMAX=2000; DTLZ2 TMAX=500
 clc; close all;
 root = fileparts(fileparts(mfilename('fullpath')));
 addpath(root);
 
-Sold = load(fullfile(root,'results','ablation_par.mat'));        % ZDT1/2/3 行
-Snew = load(fullfile(root,'results','ablation_DTLZ_all.mat'));   % DTLZ1/2/3 行
-
-% 合并 stats：ZDT1/2/3(1:3) 取旧；DTLZ1/2/3(4:6) 取新
-stats = Sold.stats;
-fn = fieldnames(stats);   % 以旧 stats 字段模板为基础
-for b = 4:6
-    % 逐字段复制新文件的 rankOrder/friedmanP 等（rankOrder 字段两版本都存在）
-    stats(b).rankOrder   = Snew.stats(b).rankOrder;
-    if isfield(Snew.stats(b),'friedmanP');  stats(b).friedmanP  = Snew.stats(b).friedmanP;  end
-    if isfield(Snew.stats(b),'friedmanChi2'); stats(b).friedmanChi2 = Snew.stats(b).friedmanChi2; end
-end
-
-algoNames = Sold.algoDefs(:,1);
-nAlgo = numel(algoNames);
+% 单一干净数据源: ablation_final.mat（make_ablation_final.m 生成）
+F = load(fullfile(root,'results','ablation_final.mat'));
+algoNames = F.algoDefs(:,1);
 benchNames = {'ZDT1','ZDT2','ZDT3','DTLZ1','DTLZ2','DTLZ3'};
+nAlgo  = numel(algoNames);
 nBench = numel(benchNames);
 
 % ---- 构建 rank 矩阵 [nBench x nAlgo]，rank=1 最优 ----
 rankMat = zeros(nBench, nAlgo);
 for b = 1:nBench
-    ro = stats(b).rankOrder;      % 排序后算法名 cell（最优在前）
+    ro = F.stats(b).rankOrder;      % 排序后算法名 cell（最优在前）
     for r = 1:numel(ro)
         idx = find(strcmp(algoNames, ro{r}));
         if ~isempty(idx), rankMat(b, idx) = r; end
@@ -48,17 +36,24 @@ palette = [ ...
     0.30 0.30 0.30;   % NSGAII 深灰
     0.75 0.00 0.75;   % MOPSO 洋红
     0.63 0.32 0.18;   % EALA 棕
-    0.90 0.30 0.55;   % IALA 粉
+    0.95 0.20 0.55;   % IALA 粉红（强调，加标记）
     0.00 0.55 0.55 ]; % HALA 青
+% 淡化非主角对比算法的颜色，缓解中心区重叠
+fade = @(c) c*0.55 + 0.45;   % 向白混合 45%，降饱和提亮
 moalaIdx = [1 2 3 4];  % A B C D 的顺序（按 algoNames 列序）
 for a = 1:nAlgo
-    lineSpec(a).color = palette(a,:);
     if ismember(a, moalaIdx)
+        lineSpec(a).color = palette(a,:);
         lineSpec(a).style = '-';
-        lineSpec(a).width = (a==4)*1.8 + (a~=4)*1.3;  % D 加粗
-    else
+        lineSpec(a).width = (a==4)*2.2 + (a~=4)*1.4;  % D 加粗
+    elseif a == 8
+        lineSpec(a).color = palette(a,:);   % IALA 保持饱和（变更焦点）
         lineSpec(a).style = '--';
-        lineSpec(a).width = 1.0;
+        lineSpec(a).width = 1.4;
+    else
+        lineSpec(a).color = fade(palette(a,:));
+        lineSpec(a).style = '--';
+        lineSpec(a).width = 0.9;
     end
 end
 
@@ -100,15 +95,21 @@ for a = 1:nAlgo
     x = [x, x(1)]; y = [y, y(1)];
     plot(x, y, lineSpec(a).style, 'Color', lineSpec(a).color, ...
         'LineWidth', lineSpec(a).width);
-    % 顶点标记（仅主角与最优基线，避免过密）
-    if a == 4 || a == 5   % MOALA-D 与 NSGAII
+    % 顶点标记：主角 MOALA-D 与对比焦点 IALA 加圆点/方块，NSGAII 加圆点
+    if a == 4
         plot(x(1:end-1), y(1:end-1), 'o', 'Color', lineSpec(a).color, ...
+            'MarkerFaceColor', lineSpec(a).color, 'MarkerSize', 4.5);
+    elseif a == 5
+        plot(x(1:end-1), y(1:end-1), 'o', 'Color', lineSpec(a).color, ...
+            'MarkerFaceColor', lineSpec(a).color, 'MarkerSize', 3.5);
+    elseif a == 8
+        plot(x(1:end-1), y(1:end-1), 's', 'Color', lineSpec(a).color, ...
             'MarkerFaceColor', lineSpec(a).color, 'MarkerSize', 4);
     end
 end
 
 % 中心标注
-text(0, 0, 'rank=1 Optimal', 'FontSize', 8, 'Color', [0.4 0.4 0.4], ...
+text(0, 0, 'rank 1 = best', 'FontSize', 8, 'Color', [0.4 0.4 0.4], ...
     'HorizontalAlignment','center','VerticalAlignment','middle');
 
 % 图例（分两列，MO-ALA 家族与对比算法）
@@ -119,12 +120,14 @@ for a = 1:nAlgo
 end
 lg = legend(hLeg, algoNames, 'Location','eastoutside', 'FontSize', 9, ...
     'Box','off', 'NumColumns', 1);
-title(lg, 'Algorithm', 'FontSize', 9);
+title(lg, 'Algorithm', 'FontSize', 9, 'FontWeight','bold');
 
 xlim([-maxRank-2.5, maxRank+4.0]); ylim([-maxRank-1.5, maxRank+1.5]);
 
 outDir = fullfile(root, 'figures'); if ~exist(outDir,'dir'), mkdir(outDir); end
+% -batch 无显示环境下保证 fig 句柄有效: 先 drawnow 再逐张导出
+set(fig, 'Visible','off'); drawnow;
 print(fig, fullfile(outDir, 'Fig3_ablation_friedman_radar.png'), '-dpng', '-r300');
 print(fig, fullfile(outDir, 'Fig3_ablation_friedman_radar.eps'), '-depsc2', '-r300');
-fprintf('[图3雷达图] 已保存 figures/Fig3_ablation_friedman_radar.png/.eps\n');
+fprintf('[radar] saved figures/Fig3_ablation_friedman_radar.png/.eps\n');
 end

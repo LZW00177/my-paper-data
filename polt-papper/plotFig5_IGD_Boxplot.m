@@ -1,17 +1,15 @@
 function plotFig5_IGD_Boxplot()
 % plotFig5_IGD_Boxplot — 论文图5：ZDT2 / DTLZ2 IGD 箱线图（9算法 × 30次）
 % 数据源（与论文表9/表10 口径一致）：
-%   ZDT2  <- results/ablation_par.mat  (行2, 旧口径, ZDT 系列论文数据源)
-%   DTLZ2 <- results/ablation_DTLZ_all.mat (行5, TMAX2=500 修正口径, DTLZ 系列论文数据源)
-% 风格：双对数轴 + 上界截断 + 退化算法 ▲ 标注
+%   results/ablation_final.mat（9/8 权威版：ZDT 行 TMAX=300 + DTLZ 行 TMAX 修正 + IALA Zheng 版）
+%   行2 = ZDT2（bi），行5 = DTLZ2
+% 风格：ZDT2 对数轴，DTLZ2 线性轴
 clc; close all;
 root = fileparts(fileparts(mfilename('fullpath')));
 addpath(root);
 
-S  = load(fullfile(root,'results','ablation_par.mat'));       % ZDT 行
-Sn = load(fullfile(root,'results','ablation_DTLZ_all.mat'));  % DTLZ 行(修正口径)
+S  = load(fullfile(root,'results','ablation_final.mat'));
 R  = S.R;
-R(4:6,:) = Sn.R(4:6,:);   % DTLZ1/2/3 行替换为修正口径（图5 只用行5 DTLZ2）
 algoNames = S.algoDefs(:,1);
 nAlgo = size(R,2);
 

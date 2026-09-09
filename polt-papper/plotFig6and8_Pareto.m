@@ -48,9 +48,9 @@ function plotFig6and8_Pareto()
     ALG_SIZES   = [80, 50, 50, 40, 56, 58];         % 点大小
 
     X_LABEL = '$J_1$: Path Length (m)';
-    Y_LABEL = '$J_2$: Flight Height Energy';
-    Z_LABEL = '$J_3$: Cumulative Risk Cost';
-    C_LABEL = '$J_4$: Turning Smoothness';
+    Y_LABEL = '$J_2$: Energy Consumption';
+    Z_LABEL = '$J_3$: Safety and Search Coverage Cost';
+    C_LABEL = '$J_4$: Sensor Imaging Quality';
 
     drawFrontFigure(pathData.scene1, ALG_KEYS, ALG_NAMES, ALG_MARKERS, ALG_SIZES, ...
         RES, 'fig6_scene1_pareto', ...
