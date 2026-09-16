@@ -99,7 +99,7 @@ on exactly the same 30 runs.
 | Data file | Source of record | Notes |
 |---|---|---|
 | `data/ablation_benchmark.mat` | 6-benchmark ablation results (ZDT1/2/3, DTLZ1/2/3) with the corrected HV reference-point convention | Matches Table 9 / Table 10 cell by cell. Iteration budget: `T = 300` for ZDT1–ZDT3 **and DTLZ2**, `T = 2000` for DTLZ1/DTLZ3. The HV direction was corrected on 2026-09-12 (samples ≥ PF; ZDT reference point (1,1) with no margin; DTLZ reference point 1.05 × true-PF maximum). |
-| `data/convergence.mat` | ZDT2 / DTLZ2 convergence re-sampling | `T = 300`, `NRUNS = 30`, `NRPT = 10`. The recording condition and array initialisation of NSGA-II and MOPSO were repaired on 2026-09-15, which removed the spurious periodic zero drops; the curves are monotone as expected. |
+| `data/convergence.mat` | ZDT2 / DTLZ2 convergence re-sampling | `T = 300`, `NRUNS = 30`, `NRPT = 10`. Re-collected on 2026-09-16 with the **same shared seed rule as the ablation** (`20260812 + 4000·b_i + 100·a_i + r`), so the last point of every curve coincides with the corresponding final-archive value in Table 9. The earlier recording bug of NSGA-II and MOPSO (spurious periodic zero drops) had been repaired on 2026-09-15. |
 | `data/terrain_metrics.mat` | Terrain scenarios | `MAX_ITER = 500`, `POP_SIZE = 30`, `ARCH_SIZE = 100`, `NUM_RUNS = 30`. |
 | `data/terrain_paths.mat` | Terrain path coordinates | 6 algorithms × 30 runs per scenario. |
 | `data/param_sweep.mat` | Parameter sweeps | HV / IGD convention identical to `ablation_benchmark.mat`; default points `Narch = 50`, `νmax = 20`, `N = 30`. |
@@ -120,6 +120,10 @@ signed-rank test in Table 10 use the IGD column, with variant D as the reference
 comparison of the regenerated PNGs against the images embedded in the manuscript gives 0 differing
 pixels for Figures 3, 4, 5, 6, 7, 8, 9 and 10; Figure 1 agrees in content (the manuscript embeds a
 down-scaled copy, so the raster dimensions differ).
+
+For Figure 4 the convergence trajectories were collected with the shared seed rule, so their
+endpoints reproduce the Table 9 values (e.g. ZDT2 MOALA-D: HV 0.3222, IGD 0.0091; DTLZ2 MOALA-D:
+HV 0.4855, IGD 0.0978).
 
 ---
 
