@@ -1,0 +1,23 @@
+# Normalize nothing automatically; be explicit instead.
+* -text
+
+# Text sources: normalise to LF on commit so the repo is portable
+*.m    text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.csv  text eol=lf
+
+# Binary assets: never touch line endings
+*.eps  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.tif  binary
+*.tiff binary
+*.fig  binary
+*.mat  binary
+*.pdf  binary
+*.rar  binary
+*.zip  binary
+*.docx binary
+*.vsdx binary

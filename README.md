@@ -38,6 +38,11 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 │   ├── plotFig6and8_Pareto.m
 │   ├── plotFig7and9_lujing.m
 │   └── plotFig10_ParamSweep_Combined_v2.m
+├── experiments/             ← supplementary Table S1: SBX-crossover variant on DTLZ1/DTLZ3
+│   └── rerun_v8_DTLZ13_0829.m
+├── results/                 ← raw data for the supplementary Table S1 analysis
+│   └── ablation_DTLZ13_v8_0829.mat
+├── Supplementary_TableS1.md ← Table S1 (DTLZ1/DTLZ3 scope analysis, SBX variant)
 └── figures/                 ← script output (.png raster, .eps vector, .fig editable)
 ```
 
@@ -77,6 +82,7 @@ Environment: MATLAB R2024b, base toolbox only.
 | `data/terrain_paths.mat` | Three-dimensional flight paths (100 points), path lengths, objective values and TOPSIS weights for 30 runs per algorithm and scenario | **Figures 6, 7, 8, 9** |
 | `data/param_sweep.mat` | Parameter sweeps over archive capacity `Narch`, `νmax` and population size `N` (HV and IGD) | **Figure 10** |
 | `data/runtime_topsis.mat` | Wall-clock runtime (2 scenarios × 6 algorithms × 30 runs) and the two-stage TOPSIS results | **Table 14, Table 15, Section 3.5** |
+| `results/ablation_DTLZ13_v8_0829.mat` + `experiments/rerun_v8_DTLZ13_0829.m` | SBX-crossover (`searchMode = 'v8'`) operator variant on DTLZ1/DTLZ3, MO-ALA variants A–D, 30 runs | **Supplementary Table S1** |
 
 The algorithm order is identical in every file:
 
@@ -104,6 +110,7 @@ on exactly the same 30 runs.
 | `data/terrain_paths.mat` | Terrain path coordinates | 6 algorithms × 30 runs per scenario. |
 | `data/param_sweep.mat` | Parameter sweeps | HV / IGD convention identical to `ablation_benchmark.mat`; default points `Narch = 50`, `νmax = 20`, `N = 30`. |
 | `data/runtime_topsis.mat` | Runtime and TOPSIS | Two-stage TOPSIS (search stage / relief-delivery stage). |
+| `results/ablation_DTLZ13_v8_0829.mat` | Supplementary Table S1 | SBX crossover + polynomial mutation (`searchMode = 'v8'`) for MO-ALA variants A–D, `T = 2000`, 30 runs; comparison algorithms carried over from the main-text data set. Generated 2026-09-12. See `Supplementary_TableS1.md`. |
 
 **Metric conventions.** HV is computed on the normalised front with reference point `(1,1)` for the ZDT
 family and `1.05 ×` the true-Pareto-front maximum for the DTLZ family; IGD uses 1000 uniformly sampled
