@@ -1,0 +1,18 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+
+=== Hard-constraint audit on published smoothed trajectories ===
+scene   alg      |   nPath pitchViol% |    nSeg collViol% | boundaryViol%
+scene1  MOALA    |    1500    1.459% |  109578    0.000% |    0.000% | over max 27.31 mean 13.36 | head/mid/tail 941/546/112 | smooth(1001 paths) 1.614% vs fallback(499) 0.000%
+scene1  NSGAII   |     900    1.030% |   40116    0.000% |    0.000% | over max 26.26 mean 9.54 | head/mid/tail 298/99/16 | smooth(272 paths) 1.534% vs fallback(628) 0.000%
+scene1  MOPSO    |    2814    0.367% |   71418    0.000% |    0.000% | over max 27.03 mean 7.96 | head/mid/tail 173/71/18 | smooth(158 paths) 1.675% vs fallback(2656) 0.000%
+scene1  EALA     |     570    0.643% |   15402    0.000% |    0.000% | over max 24.74 mean 11.75 | head/mid/tail 43/54/2 | smooth(44 paths) 2.273% vs fallback(526) 0.000%
+scene1  IALA     |    1941    1.749% |  165717    0.000% |    0.000% | over max 25.75 mean 13.13 | head/mid/tail 1750/1102/47 | smooth(1602 paths) 1.828% vs fallback(339) 0.000%
+scene1  HALA     |     740    2.029% |   31842    0.000% |    0.000% | over max 27.23 mean 13.13 | head/mid/tail 273/364/9 | smooth(209 paths) 3.122% vs fallback(531) 0.000%
+scene2  MOALA    |    1500    0.722% |  105054    0.000% |    0.000% | over max 22.29 mean 13.09 | head/mid/tail 416/340/2 | smooth(943 paths) 0.810% vs fallback(557) 0.017%
+scene2  NSGAII   |     899    0.327% |   40641    0.000% |    0.000% | over max 20.72 mean 9.23 | head/mid/tail 121/12/0 | smooth(279 paths) 0.482% vs fallback(620) 0.000%
+scene2  MOPSO    |    2813    0.081% |   72567    0.000% |    0.000% | over max 17.02 mean 5.75 | head/mid/tail 59/0/0 | smooth(173 paths) 0.344% vs fallback(2640) 0.000%
+scene2  EALA     |     570    0.220% |   23202    0.000% |    0.000% | over max 7.08 mean 3.62 | head/mid/tail 33/18/0 | smooth(144 paths) 0.358% vs fallback(426) 0.000%
+scene2  IALA     |    2061    0.577% |  188907    0.000% |    0.000% | over max 22.51 mean 10.51 | head/mid/tail 1084/6/0 | smooth(1867 paths) 0.590% vs fallback(194) 0.000%
+scene2  HALA     |     747    0.817% |   40257    0.000% |    0.000% | over max 22.19 mean 13.23 | head/mid/tail 327/2/0 | smooth(315 paths) 1.055% vs fallback(432) 0.000%
+[saved] results/path_feasibility_audit_1016.mat

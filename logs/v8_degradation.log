@@ -1,0 +1,60 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+正在使用 'Processes' 配置文件启动并行池(parpool)...
+已连接到具有 5 个工作进程的并行池。
+
+=== v8 退化补跑 (-1016 口径, 非欺骗基准, NRUNS=30, N=30) ===
+
+--- ZDT1 (bi=1, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 85s | HV=0.6541 IGD=0.0093 Sp=0.0104 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 84s | HV=0.6538 IGD=0.0100 Sp=0.0138 n=50
+    [checkpoint saved]
+
+--- ZDT2 (bi=2, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 87s | HV=0.3224 IGD=0.0091 Sp=0.0103 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 74s | HV=0.3201 IGD=0.0101 Sp=0.0137 n=50
+    [checkpoint saved]
+
+--- ZDT3 (bi=3, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 60s | HV=0.7788 IGD=0.0104 Sp=0.0150 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 69s | HV=0.7782 IGD=0.0214 Sp=0.0167 n=50
+    [checkpoint saved]
+
+--- DTLZ1 (bi=4, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 73s | HV=0.0000 IGD=40.4788 Sp=4.6998 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 84s | HV=0.0059 IGD=1.0776 Sp=0.1338 n=50
+    [checkpoint saved]
+
+--- DTLZ2 (bi=5, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 86s | HV=0.4893 IGD=0.0951 Sp=0.0575 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 82s | HV=0.4899 IGD=0.0912 Sp=0.0555 n=50
+    [checkpoint saved]
+
+--- DTLZ3 (bi=6, TMAX=500) ---
+  运行 MOALA-D(original)  ... 完成 76s | HV=0.0000 IGD=108.8292 Sp=10.2591 n=50
+    [checkpoint saved]
+  运行 MOALA-D(v8)        ... 完成 65s | HV=0.0420 IGD=1.6796 Sp=0.1867 n=50
+    [checkpoint saved]
+
+=== v8 vs original 配对检验（同种子, IGD/HV）===
+[ZDT1] orig HV=0.6541 IGD=0.0093 | v8 HV=0.6538 IGD=0.0100
+       ΔHV=-0.0% (p=0.837)   ΔIGD=+8.3% (p=6.98e-06)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+[ZDT2] orig HV=0.3224 IGD=0.0091 | v8 HV=0.3201 IGD=0.0101
+       ΔHV=-0.7% (p=0.027)   ΔIGD=+11.4% (p=1.73e-06)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+[ZDT3] orig HV=0.7788 IGD=0.0104 | v8 HV=0.7782 IGD=0.0214
+       ΔHV=-0.1% (p=0.959)   ΔIGD=+105.0% (p=5.75e-06)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+[DTLZ1] orig HV=0.0000 IGD=40.4788 | v8 HV=0.0059 IGD=1.0776
+       ΔHV=+Inf% (p=0.00195)   ΔIGD=-97.3% (p=1.73e-06)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+[DTLZ2] orig HV=0.4893 IGD=0.0951 | v8 HV=0.4899 IGD=0.0912
+       ΔHV=+0.1% (p=0.651)   ΔIGD=-4.0% (p=0.000771)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+[DTLZ3] orig HV=0.0000 IGD=108.8292 | v8 HV=0.0420 IGD=1.6796
+       ΔHV=+Inf% (p=0.00391)   ΔIGD=-98.5% (p=1.73e-06)   [v8 劣化=ΔHV<0 或 ΔIGD>0]
+
+[saved] E:\staudy\code\papper\lunwen\code\MOALA_UAV_code -1016\results\ablation_v8_degradation_1016.mat
+使用 'Processes' 配置文件的并行池正在关闭。
+完成。load('E:\staudy\code\papper\lunwen\code\MOALA_UAV_code -1016\results\ablation_v8_degradation_1016.mat') 查看；stats 含各基准 v8 相对 original 的退化幅度(%)，可直接进 Supplementary。

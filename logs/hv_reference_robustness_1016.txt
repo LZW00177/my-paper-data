@@ -1,0 +1,111 @@
+Terrain ablation robustness audit (offline; no re-optimisation)
+runs=30  Monte-Carlo repetitions K=20  HV samples/call=50000  seed base=772100
+HV reference enters ONLY through the normalisation box. IGD is computed against the reference
+front itself: box-independent, no sampling noise -> deterministic control.
+Pair labels: A vs B = memory effect, A vs C = t-dist effect, A vs D = joint effect,
+             B vs D = t added to memory, C vs D = memory added to t.
+Cliff d: >0 means the FIRST-named variant tends larger. HV larger better; IGD smaller better.
+
+================ mountain ================
+IGD reference front: 12 points
+
+-- IGD (deterministic, box-independent control) --
+   mean IGD: A=215.51 B=194.12 C=215.52 D=203.77
+   A vs B : p=0.3709    n.s.       Cliff d=+0.093
+   A vs C : p=0.8451    n.s.       Cliff d=-0.016
+   A vs D : p=0.6288    n.s.       Cliff d=+0.051
+   B vs D : p=0.6733    n.s.       Cliff d=-0.024
+   C vs D : p=0.4653    n.s.       Cliff d=+0.080
+   B vs C : p=0.6435    n.s.       Cliff d=-0.113
+
+-- HV, reference R1_baselineUnion --
+   box.max = [1051 8.484 1146 6.217]
+   mean HV: A=0.3360 B=0.3737 C=0.3507 D=0.3666   (per-run MC sd 2.0e-03..2.1e-03)
+   A vs B : p over 20 MC draws min=0.1109   med=0.1529   max=0.1915   (frac<.05=0.00) | K-avg p=0.1529    n.s.       | Cliff d=-0.200
+   A vs C : p over 20 MC draws min=0.4165   med=0.4528   max=0.517    (frac<.05=0.00) | K-avg p=0.4528    n.s.       | Cliff d=-0.111
+   A vs D : p over 20 MC draws min=0.04492  med=0.05193  max=0.06268  (frac<.05=0.35) | K-avg p=0.05193   n.s.       | Cliff d=-0.256
+   B vs D : p over 20 MC draws min=0.5716   med=0.6143   max=0.6884   (frac<.05=0.00) | K-avg p=0.6143    n.s.       | Cliff d=-0.073
+   C vs D : p over 20 MC draws min=0.4908   med=0.517    max=0.5999   (frac<.05=0.00) | K-avg p=0.5038    n.s.       | Cliff d=-0.124
+   B vs C : p over 20 MC draws min=0.517    med=0.5577   max=0.6288   (frac<.05=0.00) | K-avg p=0.5577    n.s.       | Cliff d=+0.096
+
+-- HV, reference R2_allUnion --
+   box.max = [1051 8.484 1146 6.565]
+   mean HV: A=0.3454 B=0.3827 C=0.3597 D=0.3754   (per-run MC sd 2.0e-03..2.1e-03)
+   A vs B : p over 20 MC draws min=0.1254   med=0.165    max=0.1986   (frac<.05=0.00) | K-avg p=0.1714    n.s.       | Cliff d=-0.196
+   A vs C : p over 20 MC draws min=0.4405   med=0.4779   max=0.5857   (frac<.05=0.00) | K-avg p=0.4779    n.s.       | Cliff d=-0.093
+   A vs D : p over 20 MC draws min=0.04492  med=0.05847  max=0.07029  (frac<.05=0.25) | K-avg p=0.05193   n.s.       | Cliff d=-0.244
+   B vs D : p over 20 MC draws min=0.544    med=0.6288   max=0.7036   (frac<.05=0.00) | K-avg p=0.6143    n.s.       | Cliff d=-0.069
+   C vs D : p over 20 MC draws min=0.4528   med=0.517    max=0.5999   (frac<.05=0.00) | K-avg p=0.4779    n.s.       | Cliff d=-0.133
+   B vs C : p over 20 MC draws min=0.517    med=0.5751   max=0.6435   (frac<.05=0.00) | K-avg p=0.5716    n.s.       | Cliff d=+0.093
+
+-- HV, reference R3_loose110 --
+   box.max = [1156 9.332 1261 6.838]
+   mean HV: A=0.3913 B=0.4264 C=0.4039 D=0.4197   (per-run MC sd 2.0e-03..2.2e-03)
+   A vs B : p over 20 MC draws min=0.1156   med=0.1589   max=0.1986   (frac<.05=0.00) | K-avg p=0.1589    n.s.       | Cliff d=-0.196
+   A vs C : p over 20 MC draws min=0.4528   med=0.5038   max=0.5857   (frac<.05=0.00) | K-avg p=0.544     n.s.       | Cliff d=-0.084
+   A vs D : p over 20 MC draws min=0.0495   med=0.0571   max=0.07691  (frac<.05=0.05) | K-avg p=0.05193   n.s.       | Cliff d=-0.242
+   B vs D : p over 20 MC draws min=0.517    med=0.6435   max=0.7343   (frac<.05=0.00) | K-avg p=0.6435    n.s.       | Cliff d=-0.064
+   C vs D : p over 20 MC draws min=0.4528   med=0.5038   max=0.5716   (frac<.05=0.00) | K-avg p=0.4908    n.s.       | Cliff d=-0.124
+   B vs C : p over 20 MC draws min=0.5304   med=0.5999   max=0.6733   (frac<.05=0.00) | K-avg p=0.5999    n.s.       | Cliff d=+0.104
+
+-- HV, reference R4_tight090 --
+   box.max = [945.9 7.635 1032 5.595]
+   mean HV: A=0.2711 B=0.3117 C=0.2884 D=0.3041   (per-run MC sd 1.9e-03..2.0e-03)
+   A vs B : p over 20 MC draws min=0.1109   med=0.1306   max=0.165    (frac<.05=0.00) | K-avg p=0.1254    n.s.       | Cliff d=-0.211
+   A vs C : p over 20 MC draws min=0.36     med=0.4165   max=0.4908   (frac<.05=0.00) | K-avg p=0.4165    n.s.       | Cliff d=-0.127
+   A vs D : p over 20 MC draws min=0.03872  med=0.05193  max=0.06268  (frac<.05=0.45) | K-avg p=0.05193   n.s.       | Cliff d=-0.276
+   B vs D : p over 20 MC draws min=0.5304   med=0.5999   max=0.6884   (frac<.05=0.00) | K-avg p=0.5716    n.s.       | Cliff d=-0.071
+   C vs D : p over 20 MC draws min=0.4779   med=0.517    max=0.5716   (frac<.05=0.00) | K-avg p=0.5038    n.s.       | Cliff d=-0.131
+   B vs C : p over 20 MC draws min=0.4405   med=0.4973   max=0.5716   (frac<.05=0.00) | K-avg p=0.4908    n.s.       | Cliff d=+0.104
+
+================ landslide ================
+IGD reference front: 154 points
+
+-- IGD (deterministic, box-independent control) --
+   mean IGD: A=154.60 B=124.94 C=163.69 D=126.00
+   A vs B : p=0.08972   n.s.       Cliff d=+0.242
+   A vs C : p=0.6288    n.s.       Cliff d=-0.107
+   A vs D : p=0.08221   n.s.       Cliff d=+0.218
+   B vs D : p=0.9263    n.s.       Cliff d=-0.013
+   C vs D : p=0.0495    C WORSE    Cliff d=+0.318
+   B vs C : p=0.02431   B better   Cliff d=-0.373
+
+-- HV, reference R1_baselineUnion --
+   box.max = [1163 10.35 1244 6.598]
+   mean HV: A=0.4101 B=0.4315 C=0.4208 D=0.4724   (per-run MC sd 2.0e-03..2.1e-03)
+   A vs B : p over 20 MC draws min=0.09777  med=0.1156   max=0.1414   (frac<.05=0.00) | K-avg p=0.1064    n.s.       | Cliff d=-0.196
+   A vs C : p over 20 MC draws min=0.6288   med=0.6884   max=0.7343   (frac<.05=0.00) | K-avg p=0.6733    n.s.       | Cliff d=-0.053
+   A vs D : p over 20 MC draws min=0.0407   med=0.0495   max=0.05193  (frac<.05=0.70) | K-avg p=0.04492   A WORSE    | Cliff d=-0.282
+   B vs D : p over 20 MC draws min=0.2452   med=0.2623   max=0.2895   (frac<.05=0.00) | K-avg p=0.2536    n.s.       | Cliff d=-0.131
+   C vs D : p over 20 MC draws min=0.1156   med=0.1204   max=0.1414   (frac<.05=0.00) | K-avg p=0.1254    n.s.       | Cliff d=-0.242
+   B vs C : p over 20 MC draws min=0.5038   med=0.5682   max=0.6583   (frac<.05=0.00) | K-avg p=0.5577    n.s.       | Cliff d=+0.144
+
+-- HV, reference R2_allUnion --
+   box.max = [1163 10.35 1244 6.598]
+   mean HV: A=0.4101 B=0.4315 C=0.4208 D=0.4724   (per-run MC sd 2.0e-03..2.1e-03)
+   A vs B : p over 20 MC draws min=0.09777  med=0.1156   max=0.1414   (frac<.05=0.00) | K-avg p=0.1064    n.s.       | Cliff d=-0.196
+   A vs C : p over 20 MC draws min=0.6288   med=0.6884   max=0.7343   (frac<.05=0.00) | K-avg p=0.6733    n.s.       | Cliff d=-0.053
+   A vs D : p over 20 MC draws min=0.0407   med=0.0495   max=0.05193  (frac<.05=0.70) | K-avg p=0.04492   A WORSE    | Cliff d=-0.282
+   B vs D : p over 20 MC draws min=0.2452   med=0.2623   max=0.2895   (frac<.05=0.00) | K-avg p=0.2536    n.s.       | Cliff d=-0.131
+   C vs D : p over 20 MC draws min=0.1156   med=0.1204   max=0.1414   (frac<.05=0.00) | K-avg p=0.1254    n.s.       | Cliff d=-0.242
+   B vs C : p over 20 MC draws min=0.5038   med=0.5682   max=0.6583   (frac<.05=0.00) | K-avg p=0.5577    n.s.       | Cliff d=+0.144
+
+-- HV, reference R3_loose110 --
+   box.max = [1279 11.39 1369 7.258]
+   mean HV: A=0.4591 B=0.4807 C=0.4694 D=0.5173   (per-run MC sd 2.0e-03..2.2e-03)
+   A vs B : p over 20 MC draws min=0.102    med=0.1204   max=0.1529   (frac<.05=0.00) | K-avg p=0.1254    n.s.       | Cliff d=-0.184
+   A vs C : p over 20 MC draws min=0.6435   med=0.6695   max=0.7343   (frac<.05=0.00) | K-avg p=0.6884    n.s.       | Cliff d=-0.058
+   A vs D : p over 20 MC draws min=0.03683  med=0.04492  max=0.04716  (frac<.05=1.00) | K-avg p=0.04716   A WORSE    | Cliff d=-0.291
+   B vs D : p over 20 MC draws min=0.2623   med=0.2802   max=0.2989   (frac<.05=0.00) | K-avg p=0.2802    n.s.       | Cliff d=-0.133
+   C vs D : p over 20 MC draws min=0.102    med=0.1156   max=0.1359   (frac<.05=0.00) | K-avg p=0.1156    n.s.       | Cliff d=-0.244
+   B vs C : p over 20 MC draws min=0.517    med=0.5751   max=0.6583   (frac<.05=0.00) | K-avg p=0.5999    n.s.       | Cliff d=+0.147
+
+-- HV, reference R4_tight090 --
+   box.max = [1047 9.316 1120 5.938]
+   mean HV: A=0.3525 B=0.3730 C=0.3635 D=0.4191   (per-run MC sd 2.0e-03..2.0e-03)
+   A vs B : p over 20 MC draws min=0.09368  med=0.1064   max=0.1254   (frac<.05=0.00) | K-avg p=0.102     n.s.       | Cliff d=-0.204
+   A vs C : p over 20 MC draws min=0.6435   med=0.6884   max=0.7343   (frac<.05=0.00) | K-avg p=0.7036    n.s.       | Cliff d=-0.053
+   A vs D : p over 20 MC draws min=0.04492  med=0.05319  max=0.06268  (frac<.05=0.30) | K-avg p=0.05193   n.s.       | Cliff d=-0.280
+   B vs D : p over 20 MC draws min=0.2369   med=0.2712   max=0.2895   (frac<.05=0.00) | K-avg p=0.2536    n.s.       | Cliff d=-0.129
+   C vs D : p over 20 MC draws min=0.1109   med=0.1204   max=0.1359   (frac<.05=0.00) | K-avg p=0.1254    n.s.       | Cliff d=-0.247
+   B vs C : p over 20 MC draws min=0.517    med=0.5647   max=0.6435   (frac<.05=0.00) | K-avg p=0.5716    n.s.       | Cliff d=+0.142

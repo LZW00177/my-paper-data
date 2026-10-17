@@ -1,0 +1,54 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+===== 正式地形变体消融 campaign =====
+  NUM_RUNS=30  MAX_ITER=500  POP=30  ARCH=50  PAIRED=1
+  变体: A=双关  B=仅记忆  C=仅t分布  D=完整(主算法)
+正在使用 'Processes' 配置文件启动并行池(parpool)...
+已连接到具有 4 个工作进程的并行池。
+  并行池已启用
+
+===== [mountain] =====
+  variant A 完成  (6.4 min, 均 47.1 s/run)
+    [ckpt] 已增量存盘
+  variant B 完成  (6.4 min, 均 47.6 s/run)
+    [ckpt] 已增量存盘
+  variant C 完成  (6.7 min, 均 49.9 s/run)
+    [ckpt] 已增量存盘
+  variant D 完成  (6.3 min, 均 47.0 s/run)
+    [ckpt] 已增量存盘
+
+===== [landslide] =====
+  variant A 完成  (6.8 min, 均 50.5 s/run)
+    [ckpt] 已增量存盘
+  variant B 完成  (6.9 min, 均 51.5 s/run)
+    [ckpt] 已增量存盘
+  variant C 完成  (6.9 min, 均 51.3 s/run)
+    [ckpt] 已增量存盘
+  variant D 完成  (6.2 min, 均 45.8 s/run)
+    [ckpt] 已增量存盘
+
+外部参考：已从 expResult.mat 载入 5 基线前沿（ext=150/150）
+
+===== 结果（固定参考前沿）=====
+
+[mountain] 参考前沿=external(5 baselines@expResult)  (12 点)
+  A: HV=0.3359±0.0558  IGD=215.508±66.616  前沿=1.568980e+01  J1=222.33 J2=1.37 J3=171.94 J4=0.86  t=47.1s
+  B: HV=0.3735±0.0918  IGD=194.124±83.767  前沿=1.457102e+01  J1=205.73 J2=1.28 J3=158.55 J4=0.88  t=47.6s
+  C: HV=0.3504±0.0774  IGD=215.519±77.366  前沿=1.459363e+01  J1=220.96 J2=1.37 J3=167.89 J4=0.96  t=49.9s
+  D: HV=0.3672±0.0709  IGD=203.771±72.377  前沿=1.416482e+01  J1=210.46 J2=1.27 J3=173.85 J4=0.84  t=47.0s
+  D vs A : HV 配对 p=0.0472 (D 显著优) | 非配对 p=0.0798 (无显著) | Cliff δ=+0.264
+  D vs B : HV 配对 p=0.5440 (无显著) | 非配对 p=0.5793 (无显著) | Cliff δ=+0.084
+  D vs C : HV 配对 p=0.4528 (无显著) | 非配对 p=0.3516 (无显著) | Cliff δ=+0.141
+
+[landslide] 参考前沿=external(5 baselines@expResult)  (154 点)
+  A: HV=0.4103±0.1121  IGD=154.597±75.598  前沿=1.409280e+01  J1=227.45 J2=1.49 J3=140.96 J4=0.97  t=50.5s
+  B: HV=0.4317±0.0906  IGD=124.935±58.524  前沿=1.191111e+01  J1=212.21 J2=1.37 J3=126.04 J4=0.90  t=51.5s
+  C: HV=0.4208±0.1123  IGD=163.685±66.428  前沿=1.251311e+01  J1=221.76 J2=1.39 J3=143.75 J4=0.95  t=51.3s
+  D: HV=0.4727±0.1273  IGD=126.002±69.164  前沿=1.029612e+01  J1=204.51 J2=1.32 J3=111.78 J4=0.89  t=45.8s
+  D vs A : HV 配对 p=0.0449 (D 显著优) | 非配对 p=0.0679 (无显著) | Cliff δ=+0.276
+  D vs B : HV 配对 p=0.2712 (无显著) | 非配对 p=0.3871 (无显著) | Cliff δ=+0.131
+  D vs C : HV 配对 p=0.1254 (无显著) | 非配对 p=0.1188 (无显著) | Cliff δ=+0.236
+
+总耗时：52.8 min
+已存 results/terrain_ablation_formal_1016.mat
+使用 'Processes' 配置文件的并行池正在关闭。

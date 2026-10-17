@@ -1,0 +1,21 @@
+Fisher combination of the D-vs-A hypervolume contrast across the two terrain scenarios
+  (offline; reads the archived-front audit; no re-optimisation)
+  source   : results\hv_reference_robustness_1016.mat
+  contrast : pair index 3 = A vs D ; df = 4 ; two independent experiments
+
+reference box         p_mountain    p_debris       chi2 p_combined   verdict
+R1_baselineUnion         0.05193     0.04492    12.1215    0.01647   significant
+R2_allUnion              0.05193     0.04492    12.1215    0.01647   significant
+R3_loose110              0.05193     0.04716    12.0240    0.01717   significant
+R4_tight090              0.05193     0.05193    11.8314    0.01865   significant
+
+Robustness to the Monte-Carlo spread of the mountain p-value (20 independent draws):
+  R1_baselineUnion     mountain p in [0.04492 0.06268] -> combined p in [0.01935 0.01454]
+  R2_allUnion          mountain p in [0.04492 0.07029] -> combined p in [0.02134 0.01454]
+  R3_loose110          mountain p in [0.04950 0.07691] -> combined p in [0.02401 0.01648]
+  R4_tight090          mountain p in [0.03872 0.06268] -> combined p in [0.02190 0.01450]
+
+Reading: the combination stays below 0.05 across the whole feasible range of the
+mountain p-value, so the conclusion does not depend on which draw the archive happened
+to record. The hypervolume means and the deterministic IGD contrasts are unaffected by
+this estimator noise (see results/hv_reference_robustness_1016.txt).

@@ -1,0 +1,9 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+
+=== Wall-clock scaling with dimension (mountain, N=30, T=500, N_arch=50) ===
+   N_w      D         time/s   time/it/ms         HV
+    10     30          33.79       67.576     0.1386
+    20     60          52.97      105.942     0.1106
+    30     90          66.31      132.619     0.0662
+[saved] results/dim_scaling_1016.mat

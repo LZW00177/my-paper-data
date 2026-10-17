@@ -1,0 +1,10 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+t/Tmax=0.0 : G=2.000  nu=20.0  95%=0.0834  99%=0.1138
+t/Tmax=0.5 : G=1.000  nu=6.32  95%=0.0483  99%=0.0726
+t/Tmax=1.0 : G=0.000  nu=2.00  95%=0.0000  99%=0.0000
+[警告: 向量化内容可能需要很长时间才能创建，或者可能包含意外结果。将 'ContentType' 设置为 'image' 以提高性能。<a href="matlab:warning('off', 'MATLAB:print:ContentTypeImageSuggested')">点
+击此处</a>以不再显示此消息。] 
+[警告: 向量化内容可能需要很长时间才能创建，或者可能包含意外结果。将 'ContentType' 设置为 'image' 以提高性能。<a href="matlab:warning('off', 'MATLAB:print:ContentTypeImageSuggested')">点
+击此处</a>以不再显示此消息。] 
+[saved] E:\staudy\code\papper\lunwen\code\MOALA_UAV_code -1016\figSx_out\FigSx_perturbScale.png

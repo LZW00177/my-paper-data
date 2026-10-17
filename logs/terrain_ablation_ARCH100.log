@@ -1,0 +1,54 @@
+﻿[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA_UAV_code -bing] 
+[警告: 名称不存在或不是目录: C:\Users\LZW\Desktop\papper\lunwen\code\MOALA] 
+===== 正式地形变体消融 campaign =====
+  NUM_RUNS=30  MAX_ITER=500  POP=30  ARCH=100
+  变体: A=双关  B=仅记忆  C=仅t分布  D=完整(主算法)
+正在使用 'Processes' 配置文件启动并行池(parpool)...
+已连接到具有 4 个工作进程的并行池。
+  并行池已启用
+
+===== [mountain] =====
+  variant A 完成  (6.7 min, 均 49.0 s/run)
+    [ckpt] 已增量存盘
+  variant B 完成  (7.4 min, 均 55.3 s/run)
+    [ckpt] 已增量存盘
+  variant C 完成  (6.5 min, 均 48.8 s/run)
+    [ckpt] 已增量存盘
+  variant D 完成  (6.4 min, 均 48.3 s/run)
+    [ckpt] 已增量存盘
+
+===== [landslide] =====
+  variant A 完成  (6.3 min, 均 46.9 s/run)
+    [ckpt] 已增量存盘
+  variant B 完成  (6.4 min, 均 47.4 s/run)
+    [ckpt] 已增量存盘
+  variant C 完成  (6.4 min, 均 47.7 s/run)
+    [ckpt] 已增量存盘
+  variant D 完成  (6.5 min, 均 48.1 s/run)
+    [ckpt] 已增量存盘
+
+外部参考：已从 expResult.mat 载入 5 基线前沿（ext=150/150）
+
+===== 结果（固定参考前沿）=====
+
+[mountain] 参考前沿=external(5 baselines@expResult)  (12 点)
+  A: HV=0.3632±0.0729  IGD=201.438±71.666  前沿=8.584039e+00  J1=208.67 J2=1.26 J3=172.98 J4=0.87  t=49.0s
+  B: HV=0.3955±0.1001  IGD=175.619±96.615  前沿=8.354517e+00  J1=204.20 J2=1.26 J3=151.84 J4=0.85  t=55.3s
+  C: HV=0.3556±0.0858  IGD=212.359±70.440  前沿=9.725300e+00  J1=213.66 J2=1.32 J3=177.52 J4=0.88  t=48.8s
+  D: HV=0.3875±0.0691  IGD=183.390±75.748  前沿=8.749546e+00  J1=205.38 J2=1.29 J3=155.00 J4=0.82  t=48.3s
+  D vs A : HV ranksum p=0.0412  D 显著优
+  D vs B : HV ranksum p=0.3837  无显著
+  D vs C : HV ranksum p=0.0056  D 显著优
+
+[landslide] 参考前沿=external(5 baselines@expResult)  (154 点)
+  A: HV=0.3947±0.0783  IGD=158.053±45.994  前沿=8.849302e+00  J1=232.80 J2=1.46 J3=160.68 J4=0.91  t=46.9s
+  B: HV=0.4888±0.1005  IGD=107.094±61.669  前沿=8.056687e+00  J1=193.73 J2=1.29 J3=103.00 J4=0.88  t=47.4s
+  C: HV=0.4136±0.1066  IGD=162.072±46.892  前沿=8.642190e+00  J1=229.28 J2=1.41 J3=154.00 J4=0.88  t=47.7s
+  D: HV=0.4847±0.1314  IGD=123.881±67.491  前沿=6.732703e+00  J1=198.64 J2=1.36 J3=105.34 J4=0.96  t=48.1s
+  D vs A : HV ranksum p=0.0085  D 显著优
+  D vs B : HV ranksum p=0.8223  无显著
+  D vs C : HV ranksum p=0.0467  D 显著优
+
+总耗时：52.9 min
+已存 results/terrain_ablation_formal_1016.mat
+使用 'Processes' 配置文件的并行池正在关闭。

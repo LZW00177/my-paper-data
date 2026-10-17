@@ -1,0 +1,48 @@
+G(t) schedule ablation — summary
+N=30, Tmax=500, dim=10, runs=30, BASE_SEED=20260812, REF_AI=4
+seed rule: BASE_SEED + 4000*bi + 100*REF_AI + r, r=1..NRUNS (identical across arms: CRN)
+arms (all = full MO-ALA / variant D; only the envelope differs): linear, const, floor
+
+arm definitions
+  linear : G(t) = 2(1 - t/(Tmax-1))        [the rule used in the manuscript]
+  const  : G(t) = 2                        [no damping]
+  floor  : G(t) = 2(1 - 0.9 t/(Tmax-1))    [decays to 0.2, never 0]
+
+== ZDT1 (Tmax=500) ==
+  mean HV : linear=0.6541  const=0.6552  floor=0.6527
+  mean IGD: linear=0.009260 const=0.008760 floor=0.009650
+  const  vs linear: dHV=  +0.18% (p=0.00225, h=1)  dIGD=   -5.40% (p=3.11e-05, h=1)  CliffHV=+0.177 CliffIGD=-0.718
+  floor  vs linear: dHV=  -0.21% (p=0.0101, h=1)  dIGD=   +4.22% (p=0.00129, h=1)  CliffHV=-0.249 CliffIGD=+0.544
+
+== ZDT2 (Tmax=500) ==
+  mean HV : linear=0.3224  const=0.3236  floor=0.3224
+  mean IGD: linear=0.009093 const=0.008964 floor=0.009169
+  const  vs linear: dHV=  +0.38% (p=0.00213, h=1)  dIGD=   -1.42% (p=0.159, h=0)  CliffHV=+0.207 CliffIGD=-0.178
+  floor  vs linear: dHV=  +0.02% (p=0.853, h=0)  dIGD=   +0.83% (p=0.478, h=0)  CliffHV=+0.046 CliffIGD=+0.169
+
+== ZDT3 (Tmax=500) ==
+  mean HV : linear=0.7788  const=0.7817  floor=0.7775
+  mean IGD: linear=0.010441 const=0.010267 floor=0.010878
+  const  vs linear: dHV=  +0.37% (p=0.339, h=0)  dIGD=   -1.67% (p=0.111, h=0)  CliffHV=+0.109 CliffIGD=-0.240
+  floor  vs linear: dHV=  -0.16% (p=0.558, h=0)  dIGD=   +4.18% (p=0.00183, h=1)  CliffHV=-0.077 CliffIGD=+0.502
+
+== DTLZ1 (Tmax=500) ==
+  mean HV : linear=0.0000  const=0.0000  floor=0.0000
+  mean IGD: linear=40.478781 const=41.005798 floor=39.224871
+  const  vs linear: dHV=    NaN% (p=1, h=0)  dIGD=   +1.30% (p=0.797, h=0)  CliffHV=+0.000 CliffIGD=+0.004
+  floor  vs linear: dHV=    NaN% (p=1, h=0)  dIGD=   -3.10% (p=0.441, h=0)  CliffHV=+0.000 CliffIGD=-0.140
+
+== DTLZ2 (Tmax=500) ==
+  mean HV : linear=0.4893  const=0.4837  floor=0.4855
+  mean IGD: linear=0.095066 const=0.098759 floor=0.099668
+  const  vs linear: dHV=  -1.15% (p=0.0627, h=0)  dIGD=   +3.89% (p=0.0449, h=1)  CliffHV=-0.274 CliffIGD=+0.407
+  floor  vs linear: dHV=  -0.77% (p=0.262, h=0)  dIGD=   +4.84% (p=0.014, h=1)  CliffHV=-0.133 CliffIGD=+0.353
+
+== DTLZ3 (Tmax=500) ==
+  mean HV : linear=0.0000  const=0.0000  floor=0.0000
+  mean IGD: linear=108.829202 const=103.547663 floor=103.060249
+  const  vs linear: dHV=    NaN% (p=1, h=0)  dIGD=   -4.85% (p=0.237, h=0)  CliffHV=+0.000 CliffIGD=-0.169
+  floor  vs linear: dHV=    NaN% (p=1, h=0)  dIGD=   -5.30% (p=0.221, h=0)  CliffHV=+0.000 CliffIGD=-0.158
+
+Interpretation: HV larger is better, IGD smaller is better. dHV>0 / dIGD<0 means the
+arm improves on the manuscript rule. Paired two-sided Wilcoxon over 30 common-random-number runs.

@@ -1,0 +1,12 @@
+MOALA consolidated data package
+generated: 2026-09-15 23:12:52
+source dir: E:\staudy\code\papper\lunwen\code\MOALA_UAV_code -0829\results
+
+[1] ablation_benchmark.mat   -> Table 9, Table 10, Fig 3, Fig 5
+[2] convergence.mat          -> Fig 4
+[3] terrain_metrics.mat      -> Table 11, Table 12, Table 13
+[4] terrain_paths.mat        -> Fig 6, Fig 7, Fig 8, Fig 9
+[5] param_sweep.mat          -> Fig 10
+[6] runtime_topsis.mat       -> Table 14, Table 15, Section 3.5
+
+All 6 consolidated files written to MOALA/data/.

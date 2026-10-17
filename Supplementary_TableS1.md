@@ -1,3 +1,11 @@
+> **⚠️ LEGACY DOCUMENT — NOT PART OF THE CURRENT REVISION PACKAGE (2026-10).**
+> This file documents an early exploratory scope analysis (the quarantined `v8` SBX-crossover
+> variant on DTLZ1/DTLZ3). It is **not** cited by the revised manuscript and is **not** the
+> manuscript's Supplementary Table S1. The current supplementary tables of the revised
+> manuscript are `tables/Supplementary_Tables_S1-S5.md` / `.docx` in this repository, whose
+> content and provenance are defined by `data/MANIFEST_revision_20261016.txt`. This legacy
+> file is retained only for version-history transparency.
+
 # Supplementary Table S1 — DTLZ1/DTLZ3 Scope Analysis with the SBX-Crossover MO-ALA Variant
 
 **Associated manuscript:** MO-ALA: A Bio-Inspired Multi-Objective Artificial Lemming Algorithm with Dual-Layer Historical Memory and Adaptive *t*-Distribution Perturbation for Post-Disaster Mountain UAV Search-and-Rescue Path Planning (submitted to *Biomimetics*)
