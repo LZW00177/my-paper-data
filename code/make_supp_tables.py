@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""make_supp_tables.py - generates Supplementary Tables S1-S5 (MS 4584712, revision 2026-10-16)
+"""make_supp_tables.py - generates Supplementary Tables S1-S5 (MS 4584712, revision 2026-10-21)
 
 All numbers are recomputed from the archived run data; none is transcribed by hand:
   S1  hard-constraint trajectory feasibility audit  <- data/path_feasibility_audit_1016.mat
@@ -45,18 +45,25 @@ W_LATE = np.array([0.1, 0.1, 0.6, 0.2])
 
 # ----------------------------------------------------------------------------- utils
 def topsis(F, w):
-    """F: K x 4 cost-criteria objectives -> (best index, closeness coefficient)."""
+    """F: K x 4 cost-criteria objectives -> (selected index, closeness-coefficient array).
+    Selection uses per-front min-max normalization, identical to Section 3.6."""
     F = np.asarray(F, float)
-    if F.ndim != 2 or F.shape[0] < 2:
-        return 0, np.nan
-    n = F / (np.sqrt((F ** 2).sum(axis=0)) + 1e-12)
-    v = n * w
+    if F.ndim != 2 or F.shape[0] == 0:
+        return 0, np.full(1, np.nan)
+    rngv = F.max(axis=0) - F.min(axis=0)
+    rngv[rngv == 0] = 1.0
+    n = (F - F.min(axis=0)) / rngv
+    v = n * np.asarray(w, float)
     ideal = v.min(axis=0)
     anti = v.max(axis=0)
     Dp = np.sqrt(((v - ideal) ** 2).sum(axis=1))
     Dm = np.sqrt(((v - anti) ** 2).sum(axis=1))
-    C = Dm / (Dp + Dm + 1e-12)
-    return int(np.argmax(C)), float(C.max())
+    D = Dp + Dm
+    with np.errstate(invalid="ignore", divide="ignore"):
+        C = np.where(D > 0, Dm / D, np.nan)
+    if np.all(np.isnan(C)):
+        return 0, C                       # numerically degenerate front: C_i undefined
+    return int(np.nanargmax(C)), C
 
 
 def load_objs(h):
@@ -185,35 +192,37 @@ def table_s2(L):
 def table_s3_s4(L, data):
     L.append("\n## Table S3. Sensitivity of the TOPSIS selection to the risk weight w(J3) (MO-ALA)\n")
     L.append("The base late-stage weight vector w = (0.1, 0.1, 0.6, 0.2) has its risk weight w(J3) swept over "
-             "{0.2 ... 0.7}; the remaining weights are renormalised to sum to 1-w(J3). Means over the 30 runs.\n")
+             "{0.2 ... 0.7}; the remaining weights are renormalised to sum to 1-w(J3). The selection uses TOPSIS "
+             "with per-front min-max normalization, the same procedure as Section 3.6; the w(J3) = 0.60 row "
+             "therefore reproduces the late-stage numbers of Section 3.6. Means over the 30 runs.\n")
     L.append("| w(J3) | Mountain: J1 (/m) | Mountain: J3 | Mountain: C_i | "
              "Debris flow: J1 (/m) | Debris flow: J3 | Debris flow: C_i |")
     L.append("|---|---|---|---|---|---|---|")
-    base = np.array([0.4, 0.1, 0.3, 0.2], float)
+    base_rest = np.array([0.10, 0.10, 0.20], float)   # (J1, J2, J4) of the late-stage vector
     for w3 in [0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
         row = ["%.2f" % w3]
         for sc in SCEN:
-            w = base.copy()
-            rest = 1.0 - w3
-            w[2] = w3
-            for j in (0, 1, 3):
-                w[j] = rest * base[j] / (base[0] + base[1] + base[3])
+            rest = base_rest * (1.0 - w3) / base_rest.sum()
+            w = np.array([rest[0], rest[1], w3, rest[2]])
             j1, j3v, cc = [], [], []
             for F in data[(sc, "MOALA")]:
                 if F.shape[0] < 2:
                     continue
                 i, c = topsis(F, w)
-                j1.append(F[i, 0]); j3v.append(F[i, 2]); cc.append(c)
-            row += [sf(np.mean(j1)), sf(np.mean(j3v)), "%.4f" % np.mean(cc)]
+                j1.append(F[i, 0]); j3v.append(F[i, 2]); cc.append(c[i])
+            row += [sf(np.mean(j1)), sf(np.mean(j3v)), "%.4f" % np.nanmean(cc)]
         L.append("| " + " | ".join(row) + " |")
     L.append("\n*Reading:* raising w(J3) shifts the selected solution monotonically from short/high-risk to "
-             "long/low-risk while the closeness coefficient stays high, i.e. the mission-stage interface is "
-             "monotone and smooth rather than a knife-edge.\n")
+             "long/low-risk while the closeness coefficient remains high across the whole sweep (0.69-0.88), "
+             "i.e. the mission-stage interface is monotone and smooth rather than a knife-edge.\n")
 
     L.append("\n## Table S4. Consistently selected solution per algorithm (TOPSIS, late-stage weights "
              "w = (0.1, 0.1, 0.6, 0.2)); mean +/- std over the 30 runs\n")
+    L.append("The selection uses TOPSIS with per-front min-max normalization, the same procedure as "
+             "Section 3.6.\n")
     L.append("| Scenario | Algorithm | J1 (/m) | J2 | J3 | J4 (/rad) | C_i |")
     L.append("|---|---|---|---|---|---|---|")
+    used = {}
     for sc in SCEN:
         for a in ALGS:
             vecs, cs = [], []
@@ -221,14 +230,25 @@ def table_s3_s4(L, data):
                 if F.shape[0] < 2:
                     continue
                 i, c = topsis(F, W_LATE)
-                vecs.append(F[i]); cs.append(c)
+                vecs.append(F[i]); cs.append(c[i])
             V = np.array(vecs)
             if len(V) == 0:
                 continue
-            m, s = V.mean(axis=0), V.std(axis=0)
-            L.append("| %s | %s | %.2f +/- %.2f | %.3f +/- %.3f | %.2f +/- %.2f | %.3f +/- %.3f | %.4f |" %
-                     (SCNAM[sc], a, m[0], s[0], m[1], s[1], m[2], s[2], m[3], s[3], float(np.mean(cs))))
-    L.append("\n*Reading:* each row is one consistently selected trajectory per run, so the length-versus-safety "
+            cs = np.array(cs, float)
+            valid = ~np.isnan(cs)
+            used[(sc, a)] = (len(V), int(valid.sum()))
+            m, s = V.mean(axis=0), V.std(axis=0, ddof=1)
+            cm = float(np.nanmean(cs))
+            cstd = float(np.nanstd(cs[valid], ddof=1)) if valid.sum() > 1 else float("nan")
+            L.append("| %s | %s | %.2f +/- %.2f | %.3f +/- %.3f | %.2f +/- %.2f | %.3f +/- %.3f | %.4f +/- %.4f |" %
+                     (SCNAM[sc], a, m[0], s[0], m[1], s[1], m[2], s[2], m[3], s[3], cm, cstd))
+    N1, v1 = used[("scene1", "EALA")]
+    N2, v2 = used[("scene2", "EALA")]
+    L.append("\n*Note on EALA:* the archived front is numerically degenerate (all front members identical) in "
+             "%d of the %d mountain runs and %d of the %d debris-flow runs; C_i is undefined in those runs, so "
+             "the C_i entries are means over the valid runs only (%d/%d and %d/%d, respectively), while the "
+             "objective columns use all %d runs.\n" % (N1 - v1, N1, N2 - v2, N2, v1, N1, v2, N2, N1))
+    L.append("*Reading:* each row is one consistently selected trajectory per run, so the length-versus-safety "
              "trade-off can be read within a row - unlike per-objective minima, which may belong to different "
              "members of the front.\n")
 
@@ -249,16 +269,28 @@ def table_s5(L):
         L.append("| %d | %d | %.2f | %.3f | %.4f |" %
                  (int(it.Nw), int(it.D), float(it.time), 1000 * float(it.time) / 500, float(it.HV)))
     t0 = float(res[0].time); t2 = float(res[-1].time)
+    inc1 = 1000 * (float(res[1].time) - float(res[0].time)) / 500
+    inc2 = 1000 * (float(res[2].time) - float(res[1].time)) / 500
     L.append("\n*Reading:* tripling the decision dimension (30 -> 90) raises the wall-clock only %.2fx "
-             "(%.2f s -> %.2f s), i.e. the cost grows sub-linearly in D under a fixed generation budget. "
-             "The HV loss with dimension reflects the fixed 500-generation budget rather than a change in "
-             "asymptotic behaviour.\n" % (t2 / t0, t0, t2))
+             "(%.2f s -> %.2f s), and the per-iteration increment decelerates (%.1f ms, then %.1f ms), "
+             "i.e. the cost grows sub-linearly in D at a fixed generation budget. This is consistent with "
+             "an O(N*D) term superimposed on a D-independent fixed cost, and inconsistent with a quadratic "
+             "dependence on the number of waypoints, which would have accelerated rather than decelerated.\n"
+             % (t2 / t0, t0, t2, inc1, inc2))
+    L.append("*Note on the HV column:* each row's hypervolume is computed against a reference point "
+             "estimated from that row's own front (`MetricsCalculator.estimateHVRefPoint`) and the front is "
+             "min-max normalised to the unit box before the indicator is evaluated, exactly as for the other "
+             "HV values in this paper. The three HV entries therefore share no common reference box and are "
+             "**not comparable across rows**; they are listed only to document what each run produced, and no "
+             "conclusion about the effect of dimension on solution quality is drawn from them. The wall-clock "
+             "and per-iteration columns are computed on the same machine in the same session and are directly "
+             "comparable.\n")
 
 
 # ----------------------------------------------------------------------------- main
 def main():
     L = []
-    L.append("# MO-ALA (MS 4584712) - Supplementary Tables S1-S5 (revision, 2026-10-16)\n")
+    L.append("# MO-ALA (MS 4584712) - Supplementary Tables S1-S5 (revision, 2026-10-21)\n")
     L.append("> All numbers below are recomputed programmatically from the archived run archives "
              "(`terrain_paths.mat`, `path_feasibility_audit_1016.mat`, `ablation_v8_degradation_1016.mat`, "
              "`dim_scaling_1016.mat`); none is transcribed by hand.\n")

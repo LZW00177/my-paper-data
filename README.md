@@ -19,11 +19,12 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 .
 ├── README.md                ← this file (layout / mapping / reproduction / provenance)
 ├── run_all_figs.m           ← reproduces all manuscript figures in one command
-├── code/                    ← runtime dependencies of the plotting scripts + audit utilities
+├── code/                    ← runtime dependencies of the plotting scripts, the mission model + audit utilities
 │   ├── terrainGeneration.m      synthetic Gaussian-hill / gully DEM generator
 │   ├── threatField.m            threat-field construction (no-fly, cliffs, power lines, ruins)
 │   ├── BsplineSmooth.m          cubic B-spline path smoothing
 │   ├── MetricsCalculator.m      HV / IGD / Spacing / Spread (no toolbox)
+│   ├── UAVMultiObj.m            four-objective mission model (J1–J4 objectives + hard constraints)
 │   ├── audit_tost_equivalence_1016.py   TOST equivalence audit of the benchmark ablation (Python)
 │   └── make_supp_tables.py      builds the revision-era supplementary tables (Python)
 ├── data/                    ← all numerical results, 2 provenance manifests + revision-era archives
@@ -171,7 +172,9 @@ HV 0.4855, IGD 0.0978).
 The original numerical results and all plotting scripts required to reproduce Figures 1 and 3–10 are
 provided here. The core MO-ALA source code and the detailed implementation files are **not** included
 because the work is under a patent application; they are available from the corresponding author on
-reasonable request.
+reasonable request. The four-objective mission model that defines J1–J4 and the hard
+constraints (`code/UAVMultiObj.m`) **is** included, so the archived trajectories in `data/` can be
+re-evaluated with the exact objective implementation; the withheld part is the search engine itself.
 
 ---
 
@@ -199,6 +202,9 @@ Supporting files:
 - `code/audit_tost_equivalence_1016.py` — reproduces the equivalence-testing analysis of the benchmark
   ablation from the released `data/ablation_benchmark.mat` (offline; no re-optimisation).
 - `code/make_supp_tables.py` — builds `tables/Supplementary_Tables_S1-S5.md/.docx`.
+- `code/UAVMultiObj.m` — the four-objective terrain mission model (J1–J4 objectives, hard
+  constraints, feasibility sampling/checking) used to evaluate every archived trajectory; shipped
+  byte-identical to the version that produced the archived results.
 - `logs/` — run logs of every audit and experiment above, plus the end-to-end figure reproduction log.
 - The root-level `Supplementary_TableS1.md` is the original-submission version, retained for
   provenance only (see the banner inside the file); the revision-era tables are

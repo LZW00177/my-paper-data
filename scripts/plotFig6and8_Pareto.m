@@ -47,7 +47,7 @@ function plotFig6and8_Pareto()
 
     X_LABEL = '$J_1$: Path Length (m)';
     Y_LABEL = '$J_2$: Energy Consumption';
-    Z_LABEL = '$J_3$: Safety and Search Coverage Cost';
+    Z_LABEL = '$J_3$: Safety and Search-Reward Cost';
     C_LABEL = '$J_4$: Sensor Imaging Quality';
 
     drawFrontFigure(pathData.scene1, ALG_KEYS, ALG_NAMES, ALG_MARKERS, ALG_SIZES, ...

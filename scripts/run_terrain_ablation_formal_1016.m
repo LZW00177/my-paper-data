@@ -34,18 +34,17 @@ function run_terrain_ablation_formal_1016(NUM_RUNS, MAX_ITER, ARCH_SIZE, doSave,
 %   run_terrain_ablation_formal_1016(30, 500, 50, true, false)  % unpaired seeds
 % =========================================================================
 % REQUIRES CODE THAT IS NOT PART OF THIS PACKAGE (patent restriction)
-%   This experiment runs the core MO-ALA implementation on the terrain problem
-%   class; both are withheld together with the calling harness (runOneTask.m /
-%   runMOAblation_all.m) as stated in the Data Availability Statement.  To
-%   re-run it you must obtain from the corresponding author and place on the
-%   MATLAB path:
+%   This experiment runs the core MO-ALA implementation, which is withheld
+%   together with the calling harness (runOneTask.m / runMOAblation_all.m) as
+%   stated in the Data Availability Statement.  To re-run it you must obtain
+%   from the corresponding author and place on the MATLAB path:
 %       MOALA.m         (the algorithm; also needs ALAOperators.m / ArchiveManager.m)
-%       UAVMultiObj.m   (the terrain multi-objective problem class)
-%   Everything else used here -- terrainGeneration.m, threatField.m and
-%   MetricsCalculator.m -- is included in this package (code/).  The numerical
-%   results are archived as data/terrain_ablation_formal_1016.mat (and the
-%   N_arch = 100 capacity check as data/terrain_ablation_formal_1016_ARCH100_keep.mat)
-%   and back Table 15 and Section 3.4; they can be audited without re-running.
+%   The terrain multi-objective problem class UAVMultiObj.m and the helpers
+%   terrainGeneration.m, threatField.m and MetricsCalculator.m are included in
+%   this package (code/).  The numerical results are archived as
+%   data/terrain_ablation_formal_1016.mat (and the N_arch = 100 capacity check
+%   as data/terrain_ablation_formal_1016_ARCH100_keep.mat) and back Table 15
+%   and Section 3.4; they can be audited without re-running.
 % =========================================================================
 
 if nargin<1 || isempty(NUM_RUNS);  NUM_RUNS  = 30;  end

@@ -11,16 +11,16 @@ function audit_dim_scaling_1016()
 % Output: data/dim_scaling_1016.mat + a console table
 % =========================================================================
 % REQUIRES CODE THAT IS NOT PART OF THIS PACKAGE (patent restriction)
-%   This experiment calls the core MO-ALA implementation and the terrain
-%   problem class, which are withheld together with their calling harness as
-%   stated in the Data Availability Statement.  To re-run it you must obtain
-%   from the corresponding author and place on the MATLAB path:
+%   This experiment calls the core MO-ALA implementation, which is withheld
+%   together with its calling harness as stated in the Data Availability
+%   Statement.  To re-run it you must obtain from the corresponding author
+%   and place on the MATLAB path:
 %       MOALA.m         (the algorithm; also needs ALAOperators.m / ArchiveManager.m)
-%       UAVMultiObj.m   (the terrain multi-objective problem class)
-%   Everything else used here -- terrainGeneration.m, threatField.m and
-%   MetricsCalculator.m -- is included in this package (code/).  The numerical
-%   result is archived as data/dim_scaling_1016.mat and can be inspected, and
-%   audited against Section 3.5 / Supplementary Table S5, without re-running.
+%   The terrain multi-objective problem class UAVMultiObj.m and the helpers
+%   terrainGeneration.m, threatField.m and MetricsCalculator.m are included in
+%   this package (code/).  The numerical result is archived as
+%   data/dim_scaling_1016.mat and can be inspected, and audited against
+%   Section 3.5 / Supplementary Table S5, without re-running.
 % =========================================================================
     base    = fileparts(mfilename('fullpath'));   % .../scripts  or <dev workspace>
     pkgRoot = fileparts(base);                    % package root when run from .../scripts
