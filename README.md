@@ -17,6 +17,8 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 ```
 .
 ├── README.md                ← this file (layout / mapping / reproduction / provenance)
+├── ChangeLog_20261024.md    ← change log of the revision passes behind the submission
+├── README_Supplementary_20261024.md ← README of the supplementary package as submitted
 ├── run_all_figs.m           ← reproduces all manuscript figures in one command
 ├── code/                    ← runtime dependencies of the plotting scripts, the mission model + audit utilities
 │   ├── terrainGeneration.m      synthetic Gaussian-hill / gully DEM generator
@@ -238,3 +240,7 @@ Supporting files:
 - The root-level `Supplementary_TableS1.md` is the original-submission version, retained for
   provenance only (see the banner inside the file); the revision-era tables are
   `tables/Supplementary_Tables_S1-S5.md/.docx/.pdf`.
+- `ChangeLog_20261024.md` and `README_Supplementary_20261024.md` — the change log and the README of
+  the supplementary package as submitted on 2026-10-24 (housekeeping documents; the `.docx`/`.pdf`
+  editions that ship inside the package are rendered from these sources). They carry no numerical
+  content beyond what the rest of the repository already holds.
