@@ -126,22 +126,29 @@ def table_s1(L):
              "optimiser's own output).\n")
     L.append("| Scenario | Algorithm | Trajectories | Smoothed / fallback | Line segments | "
              "Overall pitch rate (%) | Pitch rate, smoothed (%) | Pitch rate, fallback (%) | "
-             "Max over-limit (deg) | Mean over-limit (deg) | Ground-collision points | Out-of-bound points |")
-    L.append("|---|---|---|---|---|---|---|---|---|---|---|")
+             "Max over-limit (deg) | Mean over-limit (deg) | Ground-collision points |")
+    L.append("|---|---|---|---|---|---|---|---|---|")
     for sc in SCEN:
         s = getattr(out, sc)
         for a in ALGS:
             v = getattr(s, a)
-            L.append("| %s | %s | %d | %d / %d | %d | %.3f | %.3f | %.3f | %.2f | %.2f | %d | %d |" %
+            # bndPts (out-of-bound points) is verified here and then dropped: it is
+            # identically zero in every scenario/algorithm/run, so the published table
+            # omits the column; the per-run values remain in the archive.
+            assert all(getattr(getattr(out, s2), a2).bndPts == 0
+                       for s2 in SCEN for a2 in ALGS), "out-of-bound points are not all zero"
+            L.append("| %s | %s | %d | %d / %d | %d | %.3f | %.3f | %.3f | %.2f | %.2f | %d |" %
                      (SCNAM[sc], a, v.nPath, v.nSmooth, v.nFallback, v.nSeg,
                       v.pitchRate, v.rateSmooth, v.rateFallback,
-                      v.overMaxDeg, v.overMeanDeg, v.collPts, v.bndPts))
+                      v.overMaxDeg, v.overMeanDeg, v.collPts))
     L.append("\n*Reading:* Three pitch-rate definitions are reported, because they answer different questions: "
              "**Overall** = offending segments / *all* published segments (smoothed and fallback together; this "
-             "is the quantity quoted in Section 2.1.5 and in Table R1-b of the response letter); **smoothed** = "
+             "is the quantity quoted in Section 2.1.5 and in the responses to Reviewers 1, 2 and 3); **smoothed** = "
              "restricted to the smoothed subset; **fallback** = restricted to the optimiser's own discrete "
              "waypoints. (i) ground-collision and out-of-bound violations are **exactly zero** for every "
-             "algorithm, scenario and run; (ii) the **optimiser's own (unsmoothed) trajectories satisfy the pitch "
+             "algorithm, scenario and run (the out-of-bound column is omitted from the table above "
+             "because it is identically zero in every run; the per-run values are in "
+             "`data/path_feasibility_audit_1016.mat`); (ii) the **optimiser's own (unsmoothed) trajectories satisfy the pitch "
              "constraint at every segment but one** - the discrete-fallback pitch rate is 0.000 % for every "
              "algorithm and "
              "scenario (the only exception being a single segment out of ~6 000 for MO-ALA in the debris-flow "
@@ -177,7 +184,7 @@ def table_s2(L):
     for i, nm in enumerate(names):
         ho, hh = hvmu[i][0], hvmu[i][1]
         io, ih = igdmu[i][0], igdmu[i][1]
-        dh = "+inf" if ho <= 0 else ("%+.1f%%" % (100 * (hh - ho) / ho))
+        dh = "n/a" if ho <= 0 else ("%+.1f%%" % (100 * (hh - ho) / ho))
         di = "%+.1f%%" % (100 * (ih - io) / io)
         L.append("| %s | %.4f | %.4f | %s (%.3g) | %.4f | %.4f | %s (%.3g) |" %
                  (nm, ho, hh, dh, hv_p[i], io, ih, di, igd_p[i]))
@@ -186,6 +193,11 @@ def table_s2(L):
              "(0.0059 / 0.0420) and cuts IGD by ~97-99 %. On the smooth ZDT fronts it is weakly *worse* "
              "(IGD +8.3 % / +11.4 % / +105.0 %). This is the empirical basis for keeping the SBX hybrid as an "
              "auxiliary exploratory option rather than integrating it into MO-ALA.\n")
+    L.append("\nNote on the dHV column: for DTLZ1 and DTLZ3 the relative HV change is "
+             "reported as n/a because the original memory-guided operator produced an empty "
+             "archive (HV = 0.0000), so a relative change is not defined. The paired Wilcoxon "
+             "signed-rank p-value in parentheses is computed on the 30 per-run HV values and "
+             "is therefore unaffected.\n")
 
 
 # ----------------------------------------------------------------------------- S3, S4

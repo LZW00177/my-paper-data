@@ -45,7 +45,7 @@ lineStyles = {'-','-','-','-', '--',':','-.','--',':'};
 lineWidths = [1.8, 1.8, 1.8, 2.2, 1.0, 1.0, 1.0, 1.0, 1.0];
 
 % ========== 绘图 ==========
-fig = figure('Color','w','Position',[60 60 1400 850],'Name','Fig9 Convergence');
+fig = figure('Color','w','Position',[60 60 1400 793],'Name','Fig9 Convergence');
 tl = tiledlayout(fig, 2, 2, 'TileSpacing','compact','Padding','compact');
 
 metricDefs = {'HV', 'HV (higher is better)';

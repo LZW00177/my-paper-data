@@ -2,7 +2,9 @@ MO-ALA consolidated data package -- REVISION 2026-10-16
 (revision of the 2026-09-15 package submitted with MS 4584712)
 
 generated: 2026-10-16
-base manuscript: biomimetics-4584712_Revised_v2_20261016.docx
+base manuscript: the submitted build of biomimetics-4584712 (the authors' re-saved and re-uploaded
+                 version of 17 September 2026; the 9 September 2026 date is the submission date,
+                 not the date of this build)
 previous package: biomimetics-4584712_Supplementary_Material_Updated_20260917
 
 -------------------------------------------------------------------------------
@@ -81,7 +83,12 @@ scripts/audit_paths_violation_1016.m         -> data/[9]        (~1 min)
 scripts/audit_hv_reference_robustness_1016.m -> data/[12]       (~9 min, 1 thread)
 scripts/combine_scenario_evidence_1016.m     -> logs/combine_scenario_evidence_1016.txt
 scripts/plotFigSx_perturbScale.m             -> figures/FigureS1_perturbScale.*
-run_all_figs.m + the seven legacy plotFig*.m -> figures/*       (all 10 PNG pixel-identical)
+scripts/plotFigB3_envelopeAblation.m          -> figures/FigureB3_envelopeAblation.*
+                                                   (parsed from logs/g_schedule_ablation_1016.txt;
+                                                    all 36 plotted values re-read from that log)
+run_all_figs.m + the seven legacy plotFig*.m -> figures/*       (the nine PNG of Figs. 1 and 3-10
+                                                   pixel-identical; byte differences confined to
+                                                   the tIME/tEXt metadata chunks)
 code/make_supp_tables.py                     -> tables/Supplementary_Tables_S1-S5.*
 code/audit_tost_equivalence_1016.py          -> stdout          (~10 s; TOST equivalence
     analysis of data/ablation_benchmark.mat, Section 3.2.1 / letter R2-1)

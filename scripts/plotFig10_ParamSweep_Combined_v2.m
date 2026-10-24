@@ -33,7 +33,7 @@ cols = [cZ; cD];
 
 meanStd = @(X) deal(nanmean(X,1), nanstd(X,0,1));
 
-fig = figure('Color','w','Position',[40 80 1600 490],'Name','Fig10 Parameter sensitivity (v2)');
+fig = figure('Color','w','Position',[40 80 1542 490],'Name','Fig10 Parameter sensitivity (v2)');
 tl = tiledlayout(fig, 1, 3, 'TileSpacing','compact','Padding','compact');
 
 panels = {

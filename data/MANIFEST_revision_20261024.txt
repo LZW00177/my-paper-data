@@ -1,0 +1,167 @@
+MO-ALA consolidated data package -- REVISION 2026-10-22
+(revision of the supplementary material first submitted with MS 4584712 on 15 September 2026; the 17 September 2026 update named below is superseded by this one)
+
+generated: 2026-10-20; final editorial pass: 2026-10-22
+base manuscript: biomimetics-4584712_Revised_v2_20261024_marked.docx
+2026-10-20 refresh: tables S3/S4 regenerated (per-front min-max normalization); docs updated; no data archive changed
+2026-10-21 refresh: change log extended with Section F (editorial pass on the manuscript only); no data archive and no script changed
+2026-10-21 refresh (second pass): change log extended with Section G (manuscript-vs-letters cross-check) and Section H (wall-clock wording aligned with Table S5; Supplementary Figure S1 now cited in Section 2.2.3; S1-S5 header date updated and an HV-comparability note added under Table S5). tables/Supplementary_Tables_S1-S5.md and tables/Supplementary_Tables_S1-S5.docx and both manuscript builds regenerated. No data archive was changed; the only script touched is code/make_supp_tables.py (S5 note and header date).
+2026-10-21 refresh (third pass): change log extended with Section I (archive-capacity audit: ARCH_SIZE is a file-level field; per-run front widths confirm MO-ALA ran at 50). No data archive and no script changed.
+2026-10-21 refresh (fourth pass): change log extended with Section J (final consistency pass on the manuscript only: removed the T = 2000 IGD 0.0379/0.0914 sentence from Section 4.4, fixed one IGD range endpoint in Section 3.2.2, narrowed the "every figure" claim in the Data Availability statement, and moved three figure paragraphs plus the two appendix headings to the correct paragraph styles). Both manuscript builds regenerated; no data archive, table or script changed.
+2026-10-21 refresh (fifth pass): change log extended with Section K (Appendix A now carries only the time-complexity derivation; the sentence on logs/, figures/ and the software platform, which had been appended to the end of Appendix A, was split -- the logs/figures statement was merged into the opening paragraph of Appendix B and the duplicate restatement of the software platform was removed, since the platform is stated once in Section 3.3 as the response letter says). Both manuscript builds regenerated; no data archive, table or script changed.
+2026-10-21 refresh (sixth pass): change log extended with Section L (p-value typography in Section 3.4: the four debris-flow p-values, previously bare upright numerals, are now equation objects identical to the four mountain ones already in that sentence; no p-value changed). The equation-object count therefore rises from 87 to 91. Also records the check of the apparent leading space in Section 2.2.3, which is the separator after an equation object and was deliberately left alone. Both manuscript builds regenerated; no data archive, table or script changed.
+2026-10-22 refresh: the Abstract was rewritten in full (206 words); one author string in the reference list was corrected (entry 14 now reads Gong, D.) and the journal-name punctuation of entries 19 and 30 was normalised; and the variant definitions that open Section 3.4 now state the mechanism each label names (+32 words), so that B and C match the wording of Section 3.2.1. Both manuscript builds were regenerated from the same source, so that the marked and clean files carry identical text; the Abstract paragraph was also returned to the MDPI abstract style. Change log Section N records the pass item by item. No data archive, table or script changed.
+2026-10-24 refresh: change log extended with Section W (Supplementary Table S1's provenance note and this manifest's letter citations corrected -- the pitch-rate audit, the terrain ablation and the SBX hybrid are quoted in the prose of the response letters, not in tables that do not exist; the all-zero out-of-bound column is declared omitted; code/make_supp_tables.py aligned with the published table; README's description of the package's table editions corrected). No data archive and no numerical result changed; the only script touched is code/make_supp_tables.py (Table S1 column set and note wording).
+2026-10-24 refresh (second pass): change log extended with Section X (a PDF edition of Supplementary Tables S1-S5 now ships in tables/, rendered from the Word edition; the README statements about the package's table editions were corrected to match; the rows of the five tables were set not to split across pages so that the rendered PDF keeps every row intact; the package now holds 80 files). No data archive and no numerical result changed; no script was touched by this pass.
+supersedes: biomimetics-4584712_Supplementary_Material_Updated_20260917 (the 17 September 2026 update; the 15 September 2026 original package is listed in data/MANIFEST_20260915_original.txt)
+
+-------------------------------------------------------------------------------
+A. NEW DATA ARCHIVES ADDED BY THIS REVISION (data/)
+-------------------------------------------------------------------------------
+[7]  terrain_ablation_formal_1016.mat
+     Variant A/B/C/D ablation in the two terrain scenarios.
+     N = 30, T = 500, N_arch = 50, 30 runs, common random numbers (paired),
+     fixed external reference front (30-run union of the five baselines).
+     -> Table 15 and Section 3.4; reported in the responses to Reviewers 1 and 2.
+
+[8]  terrain_ablation_formal_1016_ARCH100_keep.mat
+     The same ablation at N_arch = 100, kept as the capacity-robustness check
+     reported in the response letter (R3-minor-2, item 3).
+     NOT used for any number in the manuscript.
+
+[9]  path_feasibility_audit_1016.mat
+     Hard-constraint audit of the published trajectories of all six algorithms,
+     both scenarios, all 30 runs (pitch / ground clearance / boundary).
+     Three pitch-rate definitions (overall, smoothed subset, discrete fallback).
+     -> Section 2.1.5 audit paragraph, Section 3.3, Supplementary Table S1,
+        and the responses to Reviewers 1, 2 and 3 (pitch-rate audit).
+
+[10] ablation_v8_degradation_1016.mat
+     SBX-hybrid (v8) vs the original memory-guided operator, six benchmarks,
+     T = 500, 30 runs, both arms share the same seed (seed formula
+     BASE_SEED + 4000*bi + 100*ai + r, BASE_SEED = 20260812, ai = 4).
+     -> Section 4.4, Supplementary Table S2, and the responses to Reviewers 2, 3 and 4 (the auxiliary SBX-hybrid operator).
+
+[11] dim_scaling_1016.mat
+     MO-ALA wall-clock time vs decision-variable dimension
+     (N_w = 10/20/30 -> D = 30/60/90) at fixed N, T and N_arch.
+     -> Section 3.5 "Wall-clock scaling" paragraph, Supplementary Table S5.
+
+[12] hv_reference_robustness_1016.mat
+     Offline robustness audit of the terrain statistics. Nothing is re-optimised:
+     the archived 30-run fronts of both scenarios are re-scored under four
+     reference boxes (pooled-baseline, pooled-all, x1.10, x0.90) and K = 20
+     independent Monte-Carlo draws of the HV estimator, and all six A/B/C/D
+     pairwise contrasts are reported (IGD as a deterministic, box-independent
+     control). ~9 min, single thread.
+     -> Section 3.4 (the scenario asymmetry, the box sensitivity, the estimator
+        noise); the box-independence of the IGD columns that the response to
+        Reviewer 2 relies on was established by this audit.
+     Human-readable output: logs/hv_reference_robustness_1016.txt
+
+[13] g_schedule_ablation_1016.mat
+     Ablation of the amplitude envelope G(t) alone. Three arms of the same
+     algorithm (all = full MO-ALA, variant D) that differ only in the envelope:
+       linear = 2(1 - t/(Tmax-1))   [the rule used in the manuscript]
+       const  = 2                   [no damping]
+       floor  = 2(1 - 0.9 t/(Tmax-1))  [decays to 0.2, never 0]
+     Six benchmarks, T = 500, 30 runs, true common random numbers across arms
+     (all three arms use REF_AI = 4, so the `linear` arm is seed-identical to the
+     archived MOALA-D(original) column of ablation_v8_degradation_1016.mat; the
+     script re-checks this element-wise). 21 min 17 s wall on five workers.
+     Result: the envelope is functional but not a universal optimum -- reducing
+     the damping (floor) degrades the deterministic IGD significantly on ZDT1
+     (+4.22%, p = 0.0013), ZDT3 (+4.18%, p = 0.0018) and DTLZ2 (+4.84%, p = 0.014),
+     and removing it (const) does so on DTLZ2 (+3.89%, p = 0.045), while on ZDT1
+     the undamped arm is significantly better on both metrics (-5.40% IGD,
+     p = 3.1e-05; +0.18% HV, p = 0.0023). Hypervolume is identically 0 for all
+     three arms on DTLZ1 and DTLZ3, an independent reproduction of the
+     reference-anchoring floor in 3.1.
+     -> reviewer 4's "artificial damping" mechanism objection, and reviewer 1's
+        question about convergence stability; cited in the response letter under
+        R1-2 (full result, including the ZDT1 counter-example) and R4-2, and it
+        motivates the new Section 5.2 future-work paragraph on a convergence-
+        adaptive envelope. Every number above is printed, unedited, by the log.
+     Human-readable output: logs/g_schedule_ablation_1016.txt
+
+-------------------------------------------------------------------------------
+B. NEW SCRIPTS ADDED BY THIS REVISION (scripts/)
+-------------------------------------------------------------------------------
+RUNS FROM THIS PACKAGE AS SHIPPED (verified on a clean copy before release):
+scripts/audit_paths_violation_1016.m         -> data/[9]        (~1 min)
+scripts/audit_hv_reference_robustness_1016.m -> data/[12]       (~9 min, 1 thread)
+scripts/combine_scenario_evidence_1016.m     -> logs/combine_scenario_evidence_1016.txt
+scripts/plotFigSx_perturbScale.m             -> figures/FigureS1_perturbScale.{png,eps}
+scripts/plotFigB3_envelopeAblation.m         -> figures/FigureB3_envelopeAblation.png
+                                           -> figures/FigureB3_envelopeAblation.eps
+    The figure reproduced in Appendix B of the manuscript (labelled B.3 in the
+    appendix, captioned "Figure B.3").  It is drawn from the archived log
+    logs/g_schedule_ablation_1016.txt: the script parses the six "mean HV" /
+    "mean IGD" lines and plots them, so no number in the figure is transcribed
+    by hand.  All 36 plotted values were checked against the log.  The script
+    needs no code beyond this package and runs in seconds.
+figures/FigureB3_envelopeAblation_published.png  the raster embedded in the submitted
+    manuscript (Appendix B, Figure B.3), shipped so it can be compared with the
+    regenerated figure above; the two carry the same data.  They differ in pixel
+    dimensions and colour type (1839 x 1280 RGBA for the manuscript raster, 3126 x
+    2138 RGB for the 300 dpi export) because one was rasterised on typesetting and
+    the other was written directly by the script; the 36 plotted values are
+    identical in both.
+run_all_figs.m + the seven legacy plotFig*.m -> figures/*       (the nine PNG of Figs. 1 and 3-10
+                                                   pixel-identical, 0 differing pixels; the files
+                                                   themselves differ only in the tIME and tEXt
+                                                   metadata chunks that MATLAB writes on export.
+                                                   The EPS exports match in their vector body
+                                                   except for a one-device-pixel rasterisation
+                                                   quantisation in Figs. 7 and 9; no plotted value
+                                                   changes)
+code/make_supp_tables.py                     -> tables/Supplementary_Tables_S1-S5.*
+code/audit_tost_equivalence_1016.py          -> stdout          (~10 s; TOST equivalence
+    analysis of data/ablation_benchmark.mat, Section 3.2.1 / letter R2-1)
+
+NEEDS THE WITHHELD CORE IMPLEMENTATION (aborts with an explicit
+":WithheldCode" error before doing any work; results are archived and auditable):
+scripts/run_terrain_ablation_formal_1016.m   -> data/[7] and [8]   needs MOALA.m
+scripts/audit_dim_scaling_1016.m             -> data/[11]          needs MOALA.m
+scripts/rerun_v8_degradation_1016.m          -> data/[10]          needs MOALA.m, ZDTProblem.m,
+                                                                  DTLZProblem.m, ablationWorker.m
+scripts/rerun_Gschedule_1016.m               -> data/[13]          needs MOALA.m, ZDTProblem.m,
+                                                                  DTLZProblem.m, ablationWorker.m
+
+All eight revision scripts carry English comments.
+
+Every script resolves its own input and output paths from mfilename('fullpath')
+(or __file__ for the Python generator), so nothing has to be edited and no script
+depends on the current working directory. Launch convention, from the package root:
+    matlab -batch "cd scripts; <scriptname>"
+    matlab -batch "run_all_figs"
+    python code/make_supp_tables.py
+Section 2 of README.md is the per-script run matrix, including what each re-run
+was observed to reproduce.
+
+-------------------------------------------------------------------------------
+C. NOTES
+-------------------------------------------------------------------------------
+* The scripts dated 2026-09-15 (legacy) retain their original comments, some of
+  which are in Chinese; they are shipped unmodified so that the archived results
+  remain byte-for-byte reproducible from the original submission.
+* code/UAVMultiObj.m (added in this revision) is the four-objective terrain mission
+  model that produced the archived trajectories. It predates the revision (dated
+  2026-08-28) and is shipped byte-identical, with Chinese comments like the other
+  pre-submission artefacts. The two terrain experiment scripts in section B now need
+  only the withheld MOALA.m.
+* Every script resolves its inputs and outputs from its own location, so none
+  depends on the current working directory and none has to be edited. The four
+  experiment scripts that call the withheld core implementation list the required
+  files in their header and stop with an explicit ":WithheldCode" error before
+  doing any work, rather than failing later with "Undefined function".
+* The tolerance/threshold constants used by the audit are theta_max = pi/3,
+  h_min = 2 m and a [0, 100] x [0, 100] flight box, as in Table 2 of the paper.
+* audit_hv_reference_robustness_1016.m reads the archived baseline fronts from
+  data/terrain_metrics.mat (the published terrain main-experiment archive that
+  backs Tables 11-13). Its allFronts cells were checked front-by-front against
+  the working archive used when the audit was first produced - that working copy
+  is an internal artefact and is not distributed with this package - over all 2
+  scenarios x 6 algorithms x 30 runs = 360 cells. Re-running this script against
+  data/terrain_metrics.mat reproduces the published audit exactly, so the shipped
+  archive is the one the audit was computed on.

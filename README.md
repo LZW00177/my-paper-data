@@ -1,12 +1,11 @@
 # Supplementary Materials — Reproduction Data and Plotting Code
 
 This repository contains the numerical results and the MATLAB plotting scripts that reproduce
-Figures 1 and 3–10 and the statistics reported in Tables 9–15 of the manuscript, together with the
+Figures 1 and 3–10 and the statistics reported in Tables 9–16 of the manuscript, together with the
 audit scripts, run logs, data archives and supplementary analyses added in the 2026-10-16 revision
 (Section 8):
 
-> **Bioinspired Multi-Objective Artificial Lemming Algorithm with Dual-Layer Historical Memory and
-> Adaptive t-Distribution Perturbation for Post-Disaster Mountain Terrain UAV SAR Path Planning**
+> **MO-ALA: A Multi-Objective Artificial Lemming Algorithm for Post-Disaster Mountain UAV Search-and-Rescue Path Planning**
 
 Everything needed to regenerate the figures is self-contained. No third-party toolbox is required
 (HV / IGD / Spacing are implemented from scratch in `code/MetricsCalculator.m`).
@@ -33,9 +32,9 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 │   ├── terrain_metrics.mat      Table 11, Table 12, Table 13
 │   ├── terrain_paths.mat        Figures 6, 7, 8, 9
 │   ├── param_sweep.mat          Figure 10
-│   ├── runtime_topsis.mat       Table 14, Table 15, Section 3.5
+│   ├── runtime_topsis.mat       Table 14, Table 16, Section 3.5
 │   ├── MANIFEST.txt
-│   └── …                        7 revision-era archives + 2 manifests (Section 8)
+│   └── …                        7 revision-era archives + 3 manifests (Section 8)
 ├── scripts/                 ← plotting + audit scripts (function name = file name)
 │   ├── plotFig1_TerrainThreatField.m
 │   ├── plotFig3_ablation_radar.m
@@ -44,6 +43,8 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 │   ├── plotFig6and8_Pareto.m
 │   ├── plotFig7and9_lujing.m
 │   ├── plotFig10_ParamSweep_Combined_v2.m
+│   ├── plotFigSx_perturbScale.m
+│   ├── plotFigB3_envelopeAblation.m
 │   └── …                        8 revision-era audit/experiment scripts (Section 8)
 ├── experiments/             ← original-submission Table S1: SBX-crossover variant on DTLZ1/DTLZ3
 │   └── rerun_v8_DTLZ13_0829.m
@@ -54,8 +55,10 @@ Everything needed to regenerate the figures is self-contained. No third-party to
 ├── logs/                    ← run logs of the reproduction and revision-era audits/experiments
 ├── tables/                  ← revision-era supplementary tables
 │   ├── Supplementary_Tables_S1-S5.md
-│   └── Supplementary_Tables_S1-S5.docx
+│   ├── Supplementary_Tables_S1-S5.docx
+│   └── Supplementary_Tables_S1-S5.pdf
 └── figures/                 ← script output (.png raster, .eps vector, .fig editable), incl. Figure S1
+                                and the Appendix B envelope-ablation figure (Figure B.3)
 ```
 
 **Storage rules.** Scripts read and write only relative paths inside this repository
@@ -93,7 +96,7 @@ Environment: MATLAB R2024b, base toolbox only.
 | `data/terrain_metrics.mat` | J1–J4, safety indicators (minimum / mean flight altitude, threat-zone crossings), HV / IGD for both terrain scenarios, 30 runs | **Table 11, Table 12, Table 13** |
 | `data/terrain_paths.mat` | Three-dimensional flight paths (100 points), path lengths, objective values and TOPSIS weights for 30 runs per algorithm and scenario | **Figures 6, 7, 8, 9** |
 | `data/param_sweep.mat` | Parameter sweeps over archive capacity `Narch`, `νmax` and population size `N` (HV and IGD) | **Figure 10** |
-| `data/runtime_topsis.mat` | Wall-clock runtime (2 scenarios × 6 algorithms × 30 runs) and the two-stage TOPSIS results | **Table 14, Table 15, Section 3.5** |
+| `data/runtime_topsis.mat` | Wall-clock runtime (2 scenarios × 6 algorithms × 30 runs) and the two-stage TOPSIS results | **Table 14, Table 16, Section 3.5** |
 | `results/ablation_DTLZ13_v8_0829.mat` + `experiments/rerun_v8_DTLZ13_0829.m` | SBX-crossover (`searchMode = 'v8'`) operator variant on DTLZ1/DTLZ3, MO-ALA variants A–D, 30 runs | **Supplementary Table S1** |
 
 The algorithm order is identical in every file:
@@ -143,10 +146,26 @@ signed-rank test in Table 10 use the IGD column, with variant D as the reference
 
 ## 5. Verification
 
-`run_all_figs` was executed end-to-end under MATLAB R2024b and all 7 scripts returned `OK`. Byte-level
-comparison of the regenerated PNGs against the images embedded in the manuscript gives 0 differing
-pixels for Figures 3, 4, 5, 6, 7, 8, 9 and 10; Figure 1 agrees in content (the manuscript embeds a
-down-scaled copy, so the raster dimensions differ).
+`run_all_figs` was executed end-to-end under MATLAB R2024b and all 7 scripts returned `OK`. The nine PNG
+figures of Figs. 1 and 3-10 regenerate **pixel-identically** (0 differing pixels) against the copies
+archived here, and the same holds against the rasters embedded in the manuscript for Figures 3, 4, 5,
+6, 7, 8, 9 and 10; Figure 1 agrees in content (the manuscript embeds a down-scaled copy, so the raster
+dimensions differ).
+
+Two byte-level caveats apply to the regenerated files themselves, and neither affects the plotted data:
+
+- **PNG.** The pixel payload is byte-identical; the files differ only in the `tIME` and `tEXt`
+  (`Creation Time`) metadata chunks that MATLAB writes on every export. Strip those two chunk types
+  and the remaining bytes match exactly for all nine PNG figures.
+- **EPS.** The vector body is byte-identical for Figs. 1, 3, 4, 5 and 10. For Figs. 7 and 9 the embedded
+  rasterisation differs by one device pixel (the `CT` scaling matrix differs in the fifth decimal,
+  e.g. `0.60125` vs `0.60117`), which is the 1/72-inch quantisation of the EPS rasteriser and not a
+  change in any plotted value.
+
+The canvas sizes are pinned in the plotting scripts themselves (`figure('Position', ...)`), so the
+output dimensions depend only on those constants and not on the resolution or display scaling of the
+machine that runs the scripts. The archived figures and the current scripts agree on all five canvas
+sizes that the legacy scripts request.
 
 For Figure 4 the convergence trajectories were collected with the same seed rule as the benchmark
 ablation, so their
@@ -182,7 +201,8 @@ re-evaluated with the exact objective implementation; the withheld part is the s
 
 The following files support the analyses added in the revision; each `_1016` archive is produced by
 the script listed against it. Byte manifests of the original data set and of this revision set are
-`data/MANIFEST_20260915_original.txt` and `data/MANIFEST_revision_20261016.txt`.
+`data/MANIFEST_20260915_original.txt` and `data/MANIFEST_revision_20261024.txt` (the current
+revision-set manifest; the 2026-10-16 and 2026-10-20 editions are kept for provenance).
 
 | Added script | Purpose | Output archive |
 |---|---|---|
@@ -194,6 +214,7 @@ the script listed against it. Byte manifests of the original data set and of thi
 | `scripts/audit_dim_scaling_1016.m` | Dimension-scaling audit | `data/dim_scaling_1016.mat` |
 | `scripts/combine_scenario_evidence_1016.m` | Cross-scenario evidence combination for the terrain ablation | log `logs/combine_scenario_evidence_1016.txt` |
 | `scripts/plotFigSx_perturbScale.m` | Perturbation-scale figure | `figures/FigureS1_perturbScale.png/.eps` |
+| `scripts/plotFigB3_envelopeAblation.m` | Envelope-only ablation of the three *G*(*t*) schedules (linear / constant / decaying floor), parsed from the archived run log | `figures/FigureB3_envelopeAblation.png/.eps` |
 
 Supporting files:
 
@@ -201,11 +222,19 @@ Supporting files:
   copy of the terrain ablation.
 - `code/audit_tost_equivalence_1016.py` — reproduces the equivalence-testing analysis of the benchmark
   ablation from the released `data/ablation_benchmark.mat` (offline; no re-optimisation).
-- `code/make_supp_tables.py` — builds `tables/Supplementary_Tables_S1-S5.md/.docx`.
+- `code/make_supp_tables.py` — builds `tables/Supplementary_Tables_S1-S5.md`; the `.docx` and `.pdf`
+  editions are rendered from it (the PDF rows are set not to split across pages).
+- `figures/FigureB3_envelopeAblation.png/.eps` — the envelope-ablation figure of Appendix B, regenerated
+  by `scripts/plotFigB3_envelopeAblation.m` directly from the archived log `logs/g_schedule_ablation_1016.txt`
+  (all 36 plotted values are re-read from that log; no value is hard-coded).
+- `figures/FigureB3_envelopeAblation_published.png` — the raster actually embedded in the manuscript
+  (byte-identical to the manuscript's own image part). It is 1839 x 1280 RGBA because it passed through
+  the layout rasteriser, whereas the regenerated file is 3126 x 2138 RGB at 300 dpi; both carry the same
+  36 values.
 - `code/UAVMultiObj.m` — the four-objective terrain mission model (J1–J4 objectives, hard
   constraints, feasibility sampling/checking) used to evaluate every archived trajectory; shipped
   byte-identical to the version that produced the archived results.
 - `logs/` — run logs of every audit and experiment above, plus the end-to-end figure reproduction log.
 - The root-level `Supplementary_TableS1.md` is the original-submission version, retained for
   provenance only (see the banner inside the file); the revision-era tables are
-  `tables/Supplementary_Tables_S1-S5.md/.docx`.
+  `tables/Supplementary_Tables_S1-S5.md/.docx/.pdf`.

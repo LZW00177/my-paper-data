@@ -7,22 +7,22 @@
 
 Re-validated against the scenario terrains regenerated with the exact seeds used for the reported experiments (`rng(2026+100)` mountain, `rng(2026+200)` debris flow; `minH = 40`, `maxH = 120`). Thresholds: maximum climb angle `theta_max = pi/3`, minimum clearance `h_min = 2` m, flight box `[0,100] x [0,100]`. Trajectories are split into the B-spline-smoothed ones (>= 50 points) and the discrete-waypoint fallback (<= 30 points, i.e. the optimiser's own output).
 
-| Scenario | Algorithm | Trajectories | Smoothed / fallback | Line segments | Overall pitch rate (%) | Pitch rate, smoothed (%) | Pitch rate, fallback (%) | Max over-limit (deg) | Mean over-limit (deg) | Ground-collision points | Out-of-bound points |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Mountain (S1) | MOALA | 1500 | 1001 / 499 | 109578 | 1.459 | 1.614 | 0.000 | 27.31 | 13.36 | 0 | 0 |
-| Mountain (S1) | NSGAII | 900 | 272 / 628 | 40116 | 1.030 | 1.534 | 0.000 | 26.26 | 9.54 | 0 | 0 |
-| Mountain (S1) | MOPSO | 2814 | 158 / 2656 | 71418 | 0.367 | 1.675 | 0.000 | 27.03 | 7.96 | 0 | 0 |
-| Mountain (S1) | EALA | 570 | 44 / 526 | 15402 | 0.643 | 2.273 | 0.000 | 24.74 | 11.75 | 0 | 0 |
-| Mountain (S1) | IALA | 1941 | 1602 / 339 | 165717 | 1.749 | 1.828 | 0.000 | 25.75 | 13.13 | 0 | 0 |
-| Mountain (S1) | HALA | 740 | 209 / 531 | 31842 | 2.029 | 3.122 | 0.000 | 27.23 | 13.13 | 0 | 0 |
-| Debris flow (S2) | MOALA | 1500 | 943 / 557 | 105054 | 0.722 | 0.810 | 0.017 | 22.29 | 13.09 | 0 | 0 |
-| Debris flow (S2) | NSGAII | 899 | 279 / 620 | 40641 | 0.327 | 0.482 | 0.000 | 20.72 | 9.23 | 0 | 0 |
-| Debris flow (S2) | MOPSO | 2813 | 173 / 2640 | 72567 | 0.081 | 0.344 | 0.000 | 17.02 | 5.75 | 0 | 0 |
-| Debris flow (S2) | EALA | 570 | 144 / 426 | 23202 | 0.220 | 0.358 | 0.000 | 7.08 | 3.62 | 0 | 0 |
-| Debris flow (S2) | IALA | 2061 | 1867 / 194 | 188907 | 0.577 | 0.590 | 0.000 | 22.51 | 10.51 | 0 | 0 |
-| Debris flow (S2) | HALA | 747 | 315 / 432 | 40257 | 0.817 | 1.055 | 0.000 | 22.19 | 13.23 | 0 | 0 |
+| Scenario | Algorithm | Trajectories | Smoothed / fallback | Line segments | Overall pitch rate (%) | Pitch rate, smoothed (%) | Pitch rate, fallback (%) | Max over-limit (deg) | Mean over-limit (deg) | Ground-collision points |
+|---|---|---|---|---|---|---|---|---|
+| Mountain (S1) | MOALA | 1500 | 1001 / 499 | 109578 | 1.459 | 1.614 | 0.000 | 27.31 | 13.36 | 0 |
+| Mountain (S1) | NSGAII | 900 | 272 / 628 | 40116 | 1.030 | 1.534 | 0.000 | 26.26 | 9.54 | 0 |
+| Mountain (S1) | MOPSO | 2814 | 158 / 2656 | 71418 | 0.367 | 1.675 | 0.000 | 27.03 | 7.96 | 0 |
+| Mountain (S1) | EALA | 570 | 44 / 526 | 15402 | 0.643 | 2.273 | 0.000 | 24.74 | 11.75 | 0 |
+| Mountain (S1) | IALA | 1941 | 1602 / 339 | 165717 | 1.749 | 1.828 | 0.000 | 25.75 | 13.13 | 0 |
+| Mountain (S1) | HALA | 740 | 209 / 531 | 31842 | 2.029 | 3.122 | 0.000 | 27.23 | 13.13 | 0 |
+| Debris flow (S2) | MOALA | 1500 | 943 / 557 | 105054 | 0.722 | 0.810 | 0.017 | 22.29 | 13.09 | 0 |
+| Debris flow (S2) | NSGAII | 899 | 279 / 620 | 40641 | 0.327 | 0.482 | 0.000 | 20.72 | 9.23 | 0 |
+| Debris flow (S2) | MOPSO | 2813 | 173 / 2640 | 72567 | 0.081 | 0.344 | 0.000 | 17.02 | 5.75 | 0 |
+| Debris flow (S2) | EALA | 570 | 144 / 426 | 23202 | 0.220 | 0.358 | 0.000 | 7.08 | 3.62 | 0 |
+| Debris flow (S2) | IALA | 2061 | 1867 / 194 | 188907 | 0.577 | 0.590 | 0.000 | 22.51 | 10.51 | 0 |
+| Debris flow (S2) | HALA | 747 | 315 / 432 | 40257 | 0.817 | 1.055 | 0.000 | 22.19 | 13.23 | 0 |
 
-*Reading:* Three pitch-rate definitions are reported, because they answer different questions: **Overall** = offending segments / *all* published segments (smoothed and fallback together; this is the quantity quoted in Section 2.1.5 and in Table R1-b of the response letter); **smoothed** = restricted to the smoothed subset; **fallback** = restricted to the optimiser's own discrete waypoints. (i) ground-collision and out-of-bound violations are **exactly zero** for every algorithm, scenario and run; (ii) the **optimiser's own (unsmoothed) trajectories satisfy the pitch constraint at every segment but one** - the discrete-fallback pitch rate is 0.000 % for every algorithm and scenario (the only exception being a single segment out of ~6 000 for MO-ALA in the debris-flow scenario, 0.017 %); (iii) every residual over-limit is therefore introduced by the B-spline *display* post-processing, it is of the same order for every algorithm (MO-ALA 1.46 % / 0.72 % overall, 1.61 % / 0.81 % on the smoothed subset alone, is below HALA 2.03 % / 0.82 % overall and 3.12 % / 1.06 % smoothed, and comparable to NSGA-II 1.03 % / 0.33 % overall), and it is concentrated in the initial climb-out (about two thirds of the offending segments lie in the first decile of a trajectory). The residual pitch over-limits are therefore neither an MO-ALA anomaly nor evidence that the optimiser violates the constraint.
+*Reading:* Three pitch-rate definitions are reported, because they answer different questions: **Overall** = offending segments / *all* published segments (smoothed and fallback together; this is the quantity quoted in Section 2.1.5 and in the responses to Reviewers 1, 2 and 3); **smoothed** = restricted to the smoothed subset; **fallback** = restricted to the optimiser's own discrete waypoints. (i) ground-collision and out-of-bound violations are **exactly zero** for every algorithm, scenario and run (the out-of-bound column is omitted from the table above because it is identically zero in every run; the per-run values are in `data/path_feasibility_audit_1016.mat`); (ii) the **optimiser's own (unsmoothed) trajectories satisfy the pitch constraint at every segment but one** - the discrete-fallback pitch rate is 0.000 % for every algorithm and scenario (the only exception being a single segment out of ~6 000 for MO-ALA in the debris-flow scenario, 0.017 %); (iii) every residual over-limit is therefore introduced by the B-spline *display* post-processing, it is of the same order for every algorithm (MO-ALA 1.46 % / 0.72 % overall, 1.61 % / 0.81 % on the smoothed subset alone, is below HALA 2.03 % / 0.82 % overall and 3.12 % / 1.06 % smoothed, and comparable to NSGA-II 1.03 % / 0.33 % overall), and it is concentrated in the initial climb-out (about two thirds of the offending segments lie in the first decile of a trajectory). The residual pitch over-limits are therefore neither an MO-ALA anomaly nor evidence that the optimiser violates the constraint.
 
 
 ## Table S2. SBX-hybrid operator vs. the original memory-guided operator
@@ -34,11 +34,14 @@ Identical protocol for both rows of each benchmark: N = 30, T = 500, N_arch = 50
 | ZDT1 | 0.6541 | 0.6538 | -0.0% (0.837) | 0.0093 | 0.0100 | +8.3% (6.98e-06) |
 | ZDT2 | 0.3224 | 0.3201 | -0.7% (0.027) | 0.0091 | 0.0101 | +11.4% (1.73e-06) |
 | ZDT3 | 0.7788 | 0.7782 | -0.1% (0.959) | 0.0104 | 0.0214 | +105.0% (5.75e-06) |
-| DTLZ1 | 0.0000 | 0.0059 | +inf (0.00195) | 40.4788 | 1.0776 | -97.3% (1.73e-06) |
+| DTLZ1 | 0.0000 | 0.0059 | n/a (0.00195) | 40.4788 | 1.0776 | -97.3% (1.73e-06) |
 | DTLZ2 | 0.4893 | 0.4899 | +0.1% (0.651) | 0.0951 | 0.0912 | -4.0% (0.000771) |
-| DTLZ3 | 0.0000 | 0.0420 | +inf (0.00391) | 108.8292 | 1.6796 | -98.5% (1.73e-06) |
+| DTLZ3 | 0.0000 | 0.0420 | n/a (0.00391) | 108.8292 | 1.6796 | -98.5% (1.73e-06) |
 
 *Reading:* on the two benchmarks with a deceptive/far-from-Pareto start (DTLZ1, DTLZ3) the SBX hybrid lifts the archive from an empty/near-empty front (HV 0.0000) to a usable one (0.0059 / 0.0420) and cuts IGD by ~97-99 %. On the smooth ZDT fronts it is weakly *worse* (IGD +8.3 % / +11.4 % / +105.0 %). This is the empirical basis for keeping the SBX hybrid as an auxiliary exploratory option rather than integrating it into MO-ALA.
+
+
+Note on the dHV column: for DTLZ1 and DTLZ3 the relative HV change is reported as n/a because the original memory-guided operator produced an empty archive (HV = 0.0000), so a relative change is not defined. The paired Wilcoxon signed-rank p-value in parentheses is computed on the 30 per-run HV values and is therefore unaffected.
 
 
 ## Table S3. Sensitivity of the TOPSIS selection to the risk weight w(J3) (MO-ALA)

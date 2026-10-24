@@ -175,7 +175,7 @@ sx = terrain.mapSize(2);
 sy = terrain.mapSize(1);
 [Xm, Ym] = meshgrid(1:sx, 1:sy);
 
-fh = figure('Color','w','Position',[74 57 1690 680]);
+fh = figure('Color','w','Position',[74 57 1539 680]);
 
 % ============ 左图 (a) ============
 ax3d = subplot(1,2,1);
@@ -296,7 +296,7 @@ sx = terrain.mapSize(2);
 sy = terrain.mapSize(1);
 [Xm, Ym] = meshgrid(1:sx, 1:sy);
 
-fh = figure('Color','w','Position',[89 66 1770 710]);
+fh = figure('Color','w','Position',[89 66 1539 710]);
 
 % ============ 左图 (a) ============
 ax3d = subplot(1,2,1);

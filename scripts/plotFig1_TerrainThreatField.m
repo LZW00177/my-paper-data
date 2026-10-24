@@ -24,7 +24,7 @@ greenMap = [0.92 0.96 0.62; 0.72 0.88 0.50; 0.45 0.72 0.35; ...
             0.20 0.52 0.22; 0.09 0.32 0.12; 0.04 0.18 0.06];
 greenMap = interp1(linspace(0,1,size(greenMap,1)), greenMap, linspace(0,1,256));
 
-fig = figure('Color','w','Position',[40 40 1500 950],'Name','Fig2 Terrain & Threat');
+fig = figure('Color','w','Position',[40 40 1500 793],'Name','Fig2 Terrain & Threat');
 tl = tiledlayout(fig, 2, 2, 'TileSpacing','compact','Padding','compact');
 
 for si = 1:2
